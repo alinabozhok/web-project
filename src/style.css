@@ -1,56 +1,68 @@
-:root {
-  --index: calc(1vw + 1vh);
-}
-
 @font-face {
   font-family: irishgrover-web;
   src: url("./assets/IrishGrover.woff2");
 }
 
 h1,h2,h3,h4,h5,h6 {
-  font-family: irishgrover-web;
+  font-family: irishgrover-web, serif;
 }
 
 body {
+  padding: 16px;
   background-color: #E0DBD0;
-  font-family: irishgrover-web;
+  font-family: irishgrover-web, serif;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .hero {
-  float: right;
-  margin-right: calc(var(--index) * 6);
-  width: calc(var(--index) * 15);
+  width: 23%;
 }
 
 .main-title {
-  width: calc(var(--index) * 40);
-  margin: 0 auto;
-  margin-bottom: calc(var(--index) * 3);
-  margin-top: calc(var(--index) * 3);
-  display: block;
+  width: 70%;
 }
 
-.algorithms-up {
-  margin-left: calc(var(--index) * 5);
-  margin-top: calc(var(--index) * 4.5);
-}
-
-.algorithms-down {
-  margin-left: calc(var(--index) * 5);
-  margin-top: calc(var(--index) * 4.5);
-}
-
-.algorithms-up, .algorithms-down {
+.algorithms-section {
+  width: 60%;
   display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.algorithms-line {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .algorithms-item {
-  width: calc(var(--index) * 4);
-  margin-left: calc(var(--index) * 5);
-  padding: calc(var(--index) * 1);
-  margin-left: calc(var(--index) * 5);
-  border-radius: calc(var(--index) * 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.algorithms-image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  padding: 8px;
+  border-radius: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,37 +72,37 @@ body {
   background-color: #9f9291;
 }
 #brain:hover {
-  background-color: #ffffff;
+  background-color: #CDC4C0;
 }
 #tree {
   background-color: #6D7452;
 }
 #tree:hover {
-  background-color: #ffffff;
+  background-color: #A3AC7E;
 }
 #astar {
   background-color: #919970;
 }
 #astar:hover {
-  background-color: #ffffff;
+  background-color: #C0C99B;
 }
 #genetic {
   background-color: #6D7452;
 }
 #genetic:hover {
-  background-color: #ffffff;
+  background-color: #A3AC7E;
 }
 #clustering {
   background-color: #919970;
 }
 #clustering:hover {
-  background-color: #ffffff;
+  background-color: #C0C99B;
 }
 #ant {
-  background-color: #9A8B86;
+  background-color: #9f9291;
 }
 #ant:hover {
-  background-color: #ffffff;
+  background-color: #CDC4C0;
 }
 
 
