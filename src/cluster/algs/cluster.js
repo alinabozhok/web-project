@@ -3,7 +3,7 @@ import {drawPointIntoCanvas} from "../../shared/ui/drawPointIntoCanvas.js";
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const colorPicker = document.getElementById("colorPicker");
-const radius = 3.0;
+const radius = 1.0;
 
 canvas.addEventListener("click", function(event) {
     const rect = canvas.getBoundingClientRect();
