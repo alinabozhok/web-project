@@ -1,9 +1,10 @@
 import {drawPointIntoCanvas} from "../../shared/ui/drawPointIntoCanvas.js";
+import {clearCanvas} from "../../shared/ui/clearCanvas.js";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const colorPicker = document.getElementById("colorPicker");
-const radius = 1.0;
+const radius = 2.0;
 
 canvas.addEventListener("click", function(event) {
     const rect = canvas.getBoundingClientRect();
@@ -14,7 +15,14 @@ canvas.addEventListener("click", function(event) {
     drawPointIntoCanvas(x, y, params, ctx);
 });
 
+const clearButton = document.querySelector("#clearButton")
+
+clearButton.addEventListener("click", function (){
+    clearCanvas(canvas,ctx);
+
+});
 
 function cluster () {
+
 
 }

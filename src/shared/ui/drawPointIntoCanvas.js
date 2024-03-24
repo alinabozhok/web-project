@@ -1,4 +1,4 @@
-const radius = 3.0;
+const radius = 5.0;
 export function drawPointIntoCanvas(x,y,params, ctx){
 
     if(params.radius !== undefined){
