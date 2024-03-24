@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
     <script src="../algs/cluster.js" type="module"></script>
-
+    <link rel="stylesheet" type="text/css" href="cluster.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cluster Alg</title>
-    <style>
-        #canvas {
-            border: 1px solid black;
-        }
-    </style>
 </head>
 <body>
 <input id="colorPicker" type="color" value="#000000"/>
 <canvas id="canvas" width="500" height="500"></canvas>
-<button onclick="cluster()">Cluster</button>
+<label for="clusterCount">Number of Clusters:</label>
+<input type="number" id="clusterCount" min="1" value="2">
+<button id="clusterButton">Cluster</button>
 <button id="clearButton">Clear Canvas</button>
 </body>
 </html>
