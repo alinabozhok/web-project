@@ -1,5 +1,3 @@
-const backStack = []
-
 export class BackStack {
     backStack = [];
     pushAction = (type, snapshot) => {
