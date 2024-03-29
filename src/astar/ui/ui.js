@@ -1,13 +1,20 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    // Инициализация переменных
     let sizeInput = document.getElementById('grid-size');
+    let speedValue = document.getElementById('animation-speed')
     let canvas = document.getElementById('grid-canvas');
     let ctx = canvas.getContext('2d');
+
     let startCell = null;
     let endCell = null;
-    let isShiftPressed = false;
+
     let cellSize = null;
+
     let grid = [];
 
+    let isShiftPressed = false;
+
+    // Функция для генерации сетки
     function generateGrid() {
         let size = parseInt(sizeInput.value);
 
@@ -16,78 +23,70 @@ document.addEventListener('DOMContentLoaded', function() {
         startCell = null;
         endCell = null;
 
-        canvas.width = 600;
-        canvas.height = 600;
+        canvas.width = 800;
+        canvas.height = 800;
 
-        cellSize = 600 / size;
+        cellSize = 800 / size;
 
         ctx.beginPath();
-        ctx.lineWidth = 2;
-        for (let i = 0; i <= size; i++) {
-            ctx.moveTo(i * cellSize, 0);
-            ctx.lineTo(i * cellSize, 600);
-            ctx.stroke();
-            ctx.strokeStyle = 'white';
-
-            ctx.moveTo(0, i * cellSize);
-            ctx.lineTo(600, i * cellSize);
-            ctx.stroke();
-            ctx.strokeStyle = 'white';
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size; j++) {
+                ctx.lineWidth = 25 / parseInt(sizeInput.value);
+                ctx.strokeStyle = '#7c7b7b';
+                ctx.strokeRect(j * cellSize, i * cellSize, cellSize, cellSize);
+            }
         }
 
+        // Представление grid как двумерный массив, заполненный нулями
         grid = Array(size).fill(null).map(() => Array(size).fill(0));
     }
 
+    // При загрузке страницы сразу будет отрисовываться сетка
     generateGrid();
 
-    sizeInput.addEventListener('input', function() {
+    // При изменении размеров сетки она будет сразу перерисовываться
+    sizeInput.addEventListener('input', function () {
         generateGrid();
     });
 
-    window.addEventListener('keydown', function(event) {
+    // Вспомогательные функции для отслеживания зажатия SHIFT
+    window.addEventListener('keydown', function (event) {
         if (event.key === 'Shift') {
             isShiftPressed = true;
         }
     });
 
-    window.addEventListener('keyup', function(event) {
+    window.addEventListener('keyup', function (event) {
         if (event.key === 'Shift') {
             isShiftPressed = false;
         }
     });
 
-    let isMouseDown = false;
-    let isMouseHold = false;
-    let wallPlacementDelay = 100;
-    let lastWallPlacementTime = 0;
 
-    canvas.addEventListener('mousedown', function(event) {
-        isMouseDown = true;
-        handleMouseDown(event);
+    // При нажатии на левую кнопку мыши - ставится стена, при зажатии на SHIFT - ставится старт и финиш
+    canvas.addEventListener('click', function (event) {
+        updateGrid(event);
     });
 
-    canvas.addEventListener('mouseup', function(event) {
-        isMouseDown = false;
-        isMouseHold = false;
-    });
-
-    canvas.addEventListener('mousemove', function(event) {
-        if (isMouseDown) {
-            if (!isMouseHold) {
-                let currentTime = new Date().getTime();
-                if (currentTime - lastWallPlacementTime > wallPlacementDelay) {
-                    handleMouseDown(event);
-                    lastWallPlacementTime = currentTime;
-                    isMouseHold = true;
-                }
-            }
-            else {
-                handleMouseDown(event);
-            }
+    // Вспомогательная функция для обновления только измененных ячеек
+    function updateCell(row, col) {
+        if (grid[row][col] === 1) {
+            ctx.fillStyle = '#262626';
+        } else if (grid[row][col] === 2) {
+            ctx.fillStyle = '#05c905';
+        } else if (grid[row][col] === 3) {
+            ctx.fillStyle = '#f62424';
+        } else {
+            ctx.fillStyle = '#e7e9e9';
         }
-    });
+        ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+        ctx.lineWidth = 25 / parseInt(sizeInput.value);
+        ctx.strokeStyle = '#7c7b7b';
+        ctx.strokeRect(col * cellSize, row * cellSize, cellSize, cellSize);
+    }
 
-    function handleMouseDown(event) {
+    // Обновление состояния сетки при клике
+    function updateGrid(event) {
         let rect = canvas.getBoundingClientRect();
         let x = event.clientX - rect.left;
         let y = event.clientY - rect.top;
@@ -96,62 +95,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (isShiftPressed) {
             if (!startCell) {
-                startCell = { row: row, col: col };
+                startCell = {row: row, col: col};
                 grid[row][col] = 2;
-                drawGrid();
-            }
-            else if (!endCell && !((row === startCell.row && col === startCell.col))) {
-                endCell = { row: row, col: col };
+                updateCell(row, col);
+            } else if (!endCell && !((row === startCell.row && col === startCell.col))) {
+                endCell = {row: row, col: col};
                 grid[row][col] = 3;
-                drawGrid();
+                updateCell(row, col);
             }
-        }
-        else {
+        } else {
             if (!((row === startCell.row && col === startCell.col) || (row === endCell.row && col === endCell.col))) {
                 if (grid[row][col] === 1) {
                     grid[row][col] = 0;
-                }
-                else {
+                } else {
                     grid[row][col] = 1;
                 }
-                drawGrid();
+                updateCell(row, col);
             }
         }
     }
 
-    function drawGrid() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < grid.length; i++) {
-            for (let j = 0; j < grid[i].length; j++) {
-                if (grid[i][j] === 1) {
-                    ctx.fillStyle = 'black';
+    // Запуск алгоритма
+    document.getElementById('run-button').addEventListener('click', async function () {
+        for (let i = 0; i < parseInt(sizeInput.value); i++) {
+            for (let j = 0; j < parseInt(sizeInput.value); j++) {
+                if (grid[i][j] !== 1 && grid[i][j] !== 2 && grid[i][j] !== 3) {
+                    updateCell(i,j);
                 }
-                else if (grid[i][j] === 2) {
-                    ctx.fillStyle = 'green';
-                }
-                else if (grid[i][j] === 3) {
-                    ctx.fillStyle = 'red';
-                }
-                else {
-                    ctx.fillStyle = '#f0f0f0';
-                }
-                ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
-                ctx.strokeStyle = 'white';
-                ctx.strokeRect(j * cellSize, i * cellSize, cellSize, cellSize);
             }
         }
-    }
-
-    document.getElementById('run-button').addEventListener('click', function() {
         if (startCell && endCell) {
-            if (!aStar(grid, startCell, endCell)) {
+            let totalPath = await aStar(grid, startCell, endCell);
+            if (totalPath.length === 0) {
                 alert("Путь не найден.");
             }
+
+            else {
+                drawPath(totalPath);
+            }
+        }
+        else {
+            alert("Выберите старт и финиш.")
         }
     });
 
 
-    function aStar(grid, start, end) {
+    // A* алгоритм
+    async function aStar(grid, start, end) {
+        disableUI();
         let openSet = [start];
         let cameFrom = {};
         let gScore = {};
@@ -161,44 +152,54 @@ document.addEventListener('DOMContentLoaded', function() {
         fScore[start.row + ',' + start.col] = heuristic(start, end);
 
         while (openSet.length > 0) {
-            let current = openSet.reduce(function(acc, node) {
+            let current = openSet.reduce(function (acc, node) {
                 return fScore[acc.row + ',' + acc.col] < fScore[node.row + ',' + node.col] ? acc : node;
             });
 
             if (current.row === end.row && current.col === end.col) {
                 let totalPath = [end];
                 let currentNode = end;
+
                 while (currentNode.row !== start.row || currentNode.col !== start.col) {
                     currentNode = cameFrom[currentNode.row + ',' + currentNode.col];
                     totalPath.unshift(currentNode);
                 }
-                drawPath(totalPath);
-                return true;
+                return totalPath;
             }
 
-            openSet = openSet.filter(function(node) {
+            openSet = openSet.filter(function (node) {
                 return node.row !== current.row || node.col !== current.col;
             });
 
             let neighbors = getNeighbors(grid, current);
+
             for (let i = 0; i < neighbors.length; i++) {
+
                 let neighbor = neighbors[i];
+
+                if ((neighbor.row !== startCell.row || neighbor.col !== startCell.col) && (neighbor.row !== endCell.row || neighbor.col !== endCell.col)) {
+                    ctx.fillStyle = '#562b19';
+                    ctx.fillRect(neighbor.col * cellSize, neighbor.row * cellSize, cellSize, cellSize);
+                    await sleep(10 / parseInt(speedValue.value) * 100);
+                }
+
                 let tentativeGScore = gScore[current.row + ',' + current.col] + 1;
+
                 if (!gScore[neighbor.row + ',' + neighbor.col] || tentativeGScore < gScore[neighbor.row + ',' + neighbor.col]) {
                     cameFrom[neighbor.row + ',' + neighbor.col] = current;
                     gScore[neighbor.row + ',' + neighbor.col] = tentativeGScore;
                     fScore[neighbor.row + ',' + neighbor.col] = gScore[neighbor.row + ',' + neighbor.col] + heuristic(neighbor, end);
-                    if (!openSet.some(function(node) {
+
+                    if (!openSet.some(function (node) {
                         return node.row === neighbor.row && node.col === neighbor.col;
-                    })) {
+                    }))
                         openSet.push(neighbor);
-                    }
                 }
             }
         }
-        return false;
+        enableUI();
+        return [];
     }
-
 
     function heuristic(a, b) {
         return Math.abs(a.row - b.row) + Math.abs(a.col - b.col);
@@ -207,52 +208,68 @@ document.addEventListener('DOMContentLoaded', function() {
     function getNeighbors(grid, node) {
         let neighbors = [];
         if (node.row > 0 && grid[node.row - 1][node.col] !== 1) {
-            neighbors.push({ row: node.row - 1, col: node.col });
+            neighbors.push({row: node.row - 1, col: node.col});
         }
         if (node.row < grid.length - 1 && grid[node.row + 1][node.col] !== 1) {
-            neighbors.push({ row: node.row + 1, col: node.col });
+            neighbors.push({row: node.row + 1, col: node.col});
         }
         if (node.col > 0 && grid[node.row][node.col - 1] !== 1) {
-            neighbors.push({ row: node.row, col: node.col - 1 });
+            neighbors.push({row: node.row, col: node.col - 1});
         }
         if (node.col < grid[node.row].length - 1 && grid[node.row][node.col + 1] !== 1) {
-            neighbors.push({ row: node.row, col: node.col + 1 });
+            neighbors.push({row: node.row, col: node.col + 1});
         }
         return neighbors;
     }
 
+    // Функция для отрисовки найденного пути
     function drawPath(path) {
         let i = 1;
-        let interval = setInterval(function() {
+        let interval = setInterval(function () {
             if (i >= path.length - 1) {
                 clearInterval(interval);
+                enableUI();
                 return;
             }
             let cell = path[i];
-            ctx.fillStyle = 'blue';
+            ctx.fillStyle = '#c98345';
             ctx.fillRect(cell.col * cellSize, cell.row * cellSize, cellSize, cellSize);
             i++;
-        }, 50);
+        }, 20 / parseInt(speedValue.value) * 100);
+    }
+
+    function sleep(milliseconds) {
+        return new Promise(resolve => setTimeout(resolve, milliseconds));
     }
 
 
-    document.getElementById('set-new-cells').addEventListener('click', function() {
+    // Выбор нового старта/финиша
+    document.getElementById('set-new-cells').addEventListener('click', function () {
         setNewCells();
     });
 
     function setNewCells() {
         if (startCell) {
             grid[startCell.row][startCell.col] = 0;
+            updateCell(startCell.row, startCell.col);
         }
         if (endCell) {
             grid[endCell.row][endCell.col] = 0;
+            updateCell(endCell.row, endCell.col);
         }
         startCell = null;
         endCell = null;
-        drawGrid();
+
+        for (let i = 0; i < parseInt(sizeInput.value); i++) {
+            for (let j = 0; j < parseInt(sizeInput.value); j++) {
+                if (grid[i][j] !== 1) {
+                    updateCell(i, j);
+                }
+            }
+        }
     }
 
-    document.getElementById('clear-board').addEventListener('click', function() {
+    document.getElementById('clear-board').addEventListener('click', function () {
         clearBoard();
     });
 
@@ -261,70 +278,234 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < grid.length; i++) {
             for (let j = 0; j < grid[i].length; j++) {
                 grid[i][j] = 0
+                updateCell(i, j);
             }
         }
         startCell = null;
         endCell = null;
-        drawGrid();
     }
 
 
-
-    document.getElementById('generate-maze-button').addEventListener('click', function() {
+    document.getElementById('generate-maze-button').addEventListener('click', async function () {
         generateMaze();
     });
 
-    function generateMaze() {
-        startCell = null;
-        endCell = null;
 
-        for (let i = 0; i < grid.length; i++) {
-            for (let j = 0; j < grid[i].length; j++) {
-                if (grid[i][j] !== 2 && grid[i][j] !== 3) {
-                    grid[i][j] = 1;
-                }
-            }
-        }
+    class Coordinates {
+        x = null;
+        y = null;
 
-        animateRecursiveDivision(0, 0, grid.length - 1, grid[0].length - 1, drawGrid, 100);
-    }
-
-    function animateRecursiveDivision(startRow, startCol, endRow, endCol, drawFunction, delay) {
-        if (endRow - startRow < 2 || endCol - startCol < 2) {
-            drawFunction();
-            return;
-        }
-
-        let vertical = Math.random() < 0.5;
-
-        let passageRow = Math.floor(Math.random() * (endRow - startRow - 1)) + startRow + 1;
-        let passageCol = Math.floor(Math.random() * (endCol - startCol - 1)) + startCol + 1;
-
-        for (let i = startRow; i <= endRow; i++) {
-            for (let j = startCol; j <= endCol; j++) {
-                if ((vertical && j === passageCol) || (!vertical && i === passageRow)) {
-                    grid[i][j] = 0;
-                }
-                else {
-                    grid[i][j] = 1;
-                }
-            }
-        }
-
-        drawFunction();
-
-        if (vertical) {
-            setTimeout(() => {
-                animateRecursiveDivision(startRow, startCol, endRow, passageCol - 1, drawFunction, delay);
-                animateRecursiveDivision(startRow, passageCol + 1, endRow, endCol, drawFunction, delay);
-            }, delay);
-        }
-        else {
-            setTimeout(() => {
-                animateRecursiveDivision(startRow, startCol, passageRow - 1, endCol, drawFunction, delay);
-                animateRecursiveDivision(passageRow + 1, startCol, endRow, endCol, drawFunction, delay);
-            }, delay);
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
         }
     }
 
+    // Очистить клетку
+    function clearCell(x, y) {
+        grid[x][y] = 0;
+        updateCell(x,y);
+    }
+
+    // Проверка на пустоту
+    function isEmpty(x, y) {
+        return grid[x][y] === 0;
+    }
+
+    // Генерация лабиринта
+    async function generateMaze() {
+        disableUI();
+
+        let size = parseInt(sizeInput.value);
+
+
+        // Инициализация массива лабиринта
+        let map = new Array(size);
+        for (let i = 0; i < size; i++) {
+            map[i] = new Array(size);
+        }
+
+
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size; j++) {
+                grid[i][j] = 1;
+                updateCell(i,j);
+            }
+        }
+
+            // Выбор случайной ячейки для начала генерации
+            let cell = new Coordinates(Math.floor((Math.random() * (size / 2))) * 2, Math.floor((Math.random() * (size / 2))) * 2);
+            clearCell(cell.x, cell.y);
+
+            // Массив задействованных ячеек
+            let isUsed = new Array(size);
+            for (let i = 0; i < size; i++) {
+                isUsed[i] = new Array(size);
+                for (let j = 0; j < size; j++) {
+                    isUsed[i][j] = false;
+                }
+            }
+            isUsed[cell.x][cell.y] = true;
+
+            // Создание массива и добавление туда точек лабиринта находящиеся в двух клетках от выбранных координат
+            let nextCells = new Array;
+            if (cell.y - 2 >= 0) {
+                nextCells.push(new Coordinates(cell.x, cell.y - 2));
+                isUsed[cell.x][cell.y - 2] = true;
+            }
+            if (cell.y + 2 < size) {
+                nextCells.push(new Coordinates(cell.x, cell.y + 2));
+                isUsed[cell.x][cell.y + 2] = true;
+            }
+            if (cell.x - 2 >= 0) {
+                nextCells.push(new Coordinates(cell.x - 2, cell.y));
+                isUsed[cell.x - 2][cell.y] = true;
+            }
+            if (cell.x + 2 < size) {
+                nextCells.push(new Coordinates(cell.x + 2, cell.y));
+                isUsed[cell.x + 2][cell.y] = true;
+            }
+
+            let count = 0;
+
+            // Пока есть элементы в массиве, выбрать случайный индекс и убрать стену
+            while (nextCells.length > 0) {
+                let index = Math.floor(Math.random() * nextCells.length);
+                let x = nextCells[index].x;
+                let y = nextCells[index].y;
+                clearCell(x, y);
+
+
+                nextCells.splice(index, 1);
+
+
+                // Убрать случайную стену, которая находится между клеткой и ее родителем
+                let directions = ["NORTH", "SOUTH", "EAST", "WEST"];
+                let flag = false;
+                
+                while (directions.length > 0 && !flag) {
+
+                    let directionIndex = Math.floor(Math.random() * directions.length);
+                    
+                    switch (directions[directionIndex]) {
+                        
+                        case "NORTH":
+                            if (y - 2 >= 0 && isEmpty(x, y - 2)) {
+                                clearCell(x, y - 1);
+                                flag = true;
+                            }
+                            break;
+                            
+                        case "SOUTH":
+                            if (y + 2 < size && isEmpty(x, y + 2)) {
+                                clearCell(x, y + 1);
+                                flag = true;
+                            }
+                            break;
+                            
+                        case "EAST":
+                            if (x - 2 >= 0 && isEmpty(x - 2, y)) {
+                                clearCell(x - 1, y);
+                                flag = true;
+                            }
+                            break;
+                            
+                        case "WEST":
+                            if (x + 2 < size && isEmpty(x + 2, y)) {
+                                clearCell(x + 1, y);
+                                flag = true;
+                            }
+                            break;
+                    }
+
+                    directions.splice(directionIndex, 1);
+                }
+                
+                if (y - 2 >= 0 && !isEmpty(x, y - 2) && !isUsed[x][y - 2]) {
+                    nextCells.push(new Coordinates(x, y - 2));
+                    isUsed[x][y - 2] = true;
+                }
+                if (y + 2 < size && !isEmpty(x, y + 2) && !isUsed[x][y + 2]) {
+                    nextCells.push(new Coordinates(x, y + 2));
+                    isUsed[x][y + 2] = true;
+                }
+                if (x - 2 >= 0 && !isEmpty(x - 2, y) && !isUsed[x - 2][y]) {
+                    nextCells.push(new Coordinates(x - 2, y));
+                    isUsed[x - 2][y] = true;
+                }
+                if (x + 2 < size && !isEmpty(x + 2, y) && !isUsed[x + 2][y]) {
+                    nextCells.push(new Coordinates(x + 2, y));
+                    isUsed[x + 2][y] = true;
+                }
+
+                if (count >= Math.floor(size / 10)) {
+                    await sleep(50 / parseInt(speedValue.value) * 100);
+                    count = 0;
+                }
+                count++;
+            }
+
+            // Для четных лабиринтов
+            if (parseInt(sizeInput.value) % 2 === 0) {
+                for (let i = 0; i < parseInt(sizeInput.value); i++) {
+                    if (i === 0) {
+                        grid[i][parseInt(sizeInput.value) - 1] = 0;
+                        updateCell(i, parseInt(sizeInput.value) - 1);
+                    }
+                    else if (i === parseInt(sizeInput.value) - 1) {
+                        grid[i][parseInt(sizeInput.value) - 1] = 0;
+                        grid[i - 1][parseInt(sizeInput.value) - 1] = 0;
+                        updateCell(i-1, parseInt(sizeInput.value) - 1);
+                    }
+                    else {
+                        if (grid[i][parseInt(sizeInput.value) - 2] === 0 && (grid[i - 1][parseInt(sizeInput.value) - 2] === 1 || grid[i + 1][parseInt(sizeInput.value) - 2] === 1)) {
+                            grid[i][parseInt(sizeInput.value) - 1] = 0;
+                            updateCell(i, parseInt(sizeInput.value) - 1);
+                        }
+                    }
+
+                    await sleep(5);
+
+                }
+
+                for (let i = 0; i < parseInt(sizeInput.value); i++) {
+                    if (i === 0) {
+                        grid[parseInt(sizeInput.value) - 1][i] = 0;
+                        updateCell(parseInt(sizeInput.value) - 1, i);
+                    }
+                    else {
+                        if (i < parseInt(sizeInput.value) - 3 && grid[parseInt(sizeInput.value) - 2][i] === 0 && (grid[parseInt(sizeInput.value) - 2][i - 1] === 1 || grid[parseInt(sizeInput.value) - 2][i + 1] === 1)) {
+                            grid[parseInt(sizeInput.value) - 1][i] = 0;
+                            updateCell(parseInt(sizeInput.value) - 1, i);
+                        }
+                    }
+
+                    await sleep(5);
+                }
+            }
+
+            // Обнулить значение старта и финиша
+            startCell = null;
+            endCell = null;
+            enableUI();
+        }
+
+    // Функция для выключения UI
+    function disableUI() {
+        let interactiveElements = document.querySelectorAll('button');
+
+        interactiveElements.forEach(function(element) {
+            element.disabled = true;
+        });
+    }
+
+// Функция для включения UI
+    function enableUI() {
+        let interactiveElements = document.querySelectorAll('button');
+
+        interactiveElements.forEach(function(element) {
+            element.disabled = false;
+        });
+    }
 });
+
