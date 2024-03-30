@@ -4,12 +4,6 @@
     box-sizing: border-box;
 }
 
-:root {
-    --index: calc(1vw + 1vh);
-    --color-header: #624D4D;
-    --color-text: #6A5555;
-}
-
 @font-face {
     font-family: jomhuria-web;
     src: url("Jomhuria-Regular.woff2");
@@ -144,4 +138,8 @@ canvas {
     cursor: pointer;
 }
 
-    /**/
+    /*DISABLED UI*/
+.disabled {
+    filter: grayscale(75%);
+    pointer-events: none;
+}

@@ -98,19 +98,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 startCell = {row: row, col: col};
                 grid[row][col] = 2;
                 updateCell(row, col);
-            } else if (!endCell && !((row === startCell.row && col === startCell.col))) {
+            }
+            else if (!endCell && !((row === startCell.row && col === startCell.col))) {
                 endCell = {row: row, col: col};
                 grid[row][col] = 3;
                 updateCell(row, col);
             }
-        } else {
-            if (!((row === startCell.row && col === startCell.col) || (row === endCell.row && col === endCell.col))) {
-                if (grid[row][col] === 1) {
-                    grid[row][col] = 0;
-                } else {
-                    grid[row][col] = 1;
+        }
+        else {
+            if (!startCell || !endCell) {
+                alert("Выберите старт/финиш перед тем, как расставлять стены.")
+            }
+            else if (startCell && endCell) {
+                if (!((row === startCell.row && col === startCell.col) || (row === endCell.row && col === endCell.col))) {
+                    if (grid[row][col] === 1) {
+                        grid[row][col] = 0;
+                    } else {
+                        grid[row][col] = 1;
+                    }
+                    updateCell(row, col);
                 }
-                updateCell(row, col);
             }
         }
     }
@@ -180,6 +187,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if ((neighbor.row !== startCell.row || neighbor.col !== startCell.col) && (neighbor.row !== endCell.row || neighbor.col !== endCell.col)) {
                     ctx.fillStyle = '#562b19';
                     ctx.fillRect(neighbor.col * cellSize, neighbor.row * cellSize, cellSize, cellSize);
+                    ctx.strokeStyle = '#7c7b7b'; // Цвет обводки
+                    ctx.strokeRect(neighbor.col * cellSize, neighbor.row * cellSize, cellSize, cellSize); // Добавляем обводку
                     await sleep(10 / parseInt(speedValue.value) * 100);
                 }
 
@@ -492,19 +501,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Функция для выключения UI
     function disableUI() {
-        let interactiveElements = document.querySelectorAll('button');
+        let interactiveElements = document.querySelectorAll('button, #grid-size');
 
         interactiveElements.forEach(function(element) {
             element.disabled = true;
+            element.classList.add('disabled');
         });
     }
 
 // Функция для включения UI
     function enableUI() {
-        let interactiveElements = document.querySelectorAll('button');
+        let interactiveElements = document.querySelectorAll('button, #grid-size');
 
         interactiveElements.forEach(function(element) {
             element.disabled = false;
+            element.classList.remove('disabled');
         });
     }
 });
