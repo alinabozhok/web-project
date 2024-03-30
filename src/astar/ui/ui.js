@@ -243,6 +243,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let cell = path[i];
             ctx.fillStyle = '#c98345';
             ctx.fillRect(cell.col * cellSize, cell.row * cellSize, cellSize, cellSize);
+            ctx.strokeStyle = '#fff'
+            ctx.strokeRect(cell.col * cellSize, cell.row * cellSize, cellSize, cellSize);
             i++;
         }, 20 / parseInt(speedValue.value) * 100);
     }
