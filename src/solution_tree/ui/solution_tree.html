@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="../alg/solution_tree.js" type="module"></script>
-    <link rel="stylesheet" type="text/css" href="solution_tree.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cluster Alg</title>
+    <title>Decision Tree</title>
+    <link rel="stylesheet" href="solution_tree.css">
 </head>
 <body>
-<canvas id="canvas" width="500" height="500"></canvas>
+<h1>Decision Tree</h1>
+<div>
+    <textarea id="trainingData" placeholder="Введите обучающую выборку в формате CSV"></textarea>
+    <button onclick="buildTree()">Построить дерево</button>
+</div>
+<div id="decisionTree"></div>
+<div>
+    <textarea id="testData" placeholder="Введите данные для принятия решения в формате CSV"></textarea>
+    <button onclick="makeDecision()">Принять решение</button>
+</div>
+<div id="decisionResult"></div>
+
+<script src="../alg/solution_tree.js"></script>
 </body>
 </html>
