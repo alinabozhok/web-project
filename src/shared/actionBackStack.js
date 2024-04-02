@@ -18,4 +18,8 @@ export class BackStack {
         return [];
     }
 
+    clear = () => {
+        this.backStack = [];
+    }
+
 }

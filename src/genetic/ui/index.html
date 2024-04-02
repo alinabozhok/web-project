@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Title</title>
-
-    <script src="./../alg/alg.js" type="module"></script>
+    <script src="./../alg/alg.js" type="module" defer></script>
 </head>
 <body>
-    <h1> Genetic algorithm</h1>
+    <div style="display: flex;">
+        <h1> Genetic algorithm</h1>
+        <button id="start">start</button>
+    </div>
     <canvas id="myCanvas" width="1000" height="600" style="border:7px solid #000000;"></canvas>
     <div id="lengthEdges"></div>
-    <button id="bsbtn">print back stack</button>
 </body>
 </html>

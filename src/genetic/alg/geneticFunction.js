@@ -1,21 +1,17 @@
-//если что исправить добавление элемента в элемент(кладет ссылку или элемент???)
-
+import * as equal from "fast-deep-equal"
 export function pathGeneration(points) {
+    // debugger;
     let randomPath = [...points];
-    for(let i = points.length - 1; i >= 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
+    for(let i = 0; i < points.length; i++) {
+        let j = Math.floor(Math.random() * (points.length - 1));
         [randomPath[i], randomPath[j]] = [randomPath[j], randomPath[i]];
     }
-    randomPath.push({...randomPath[0]});
     return randomPath;
 }
 
 export function populationCount(points) {
-    let count = 1;
-    for(let i = 2; i < points.length; i++) {
-        count *= i;
-    }
-    return count;
+    //return Math.pow(points.length, Math.round(Math.sqrt(points.length)));
+    return points.length*points.length*points.length;
 }
 
 export function pathCalculation(path) {
@@ -24,6 +20,7 @@ export function pathCalculation(path) {
         let hypot = Math.round(Math.hypot(path[i].x - path[j].x, path[i].y - path[j].y));
         lengthPath += hypot;
     }
+    lengthPath += Math.round(Math.hypot(path[0].x - path[path.length - 1].x, path[0].y - path[path.length - 1].y));
     return lengthPath;
 }
 
@@ -39,7 +36,7 @@ export function populationGeneration(count, points) {
 
 export function mutation(child){
     let newChild = [...child];
-    let percentMutation = Math.floor(Math.random() * 100);
+    let percentMutation = Math.floor(Math.random() * 5000);
     if(pathCalculation(newChild) < percentMutation){
         let i = Math.floor(Math.random() * newChild.length);
         let j = i;
@@ -58,60 +55,70 @@ export function childrenGeneration(population) {
         j = Math.floor(Math.random() * population.length);
     }
 
-    let firstParent = (population[i]).path;
-    let secondParent = (population[j]).path;
+    let firstParent = [...(population[i]).path];
+    let secondParent = [...(population[j]).path];
 
     let firstChild = [];
-    let secondChild = [];
-
-    let gensForFirstChild = new Set();
-    let gensForSecondChild = new Set();
 
     for(let k = 0; k < 2; k++) {
-        firstChild.push(firstParent[k]);
-        secondChild.push(secondParent[k]);
-
-        gensForFirstChild.add(firstParent[k]);//так можно???? или он кладет ссылку???????
-        gensForSecondChild.add(secondParent[k]);
-    }
-    for(let d = 2; d < secondParent.length - 1; d++) {
-        if(!gensForFirstChild.has(secondParent[d])) {
-            firstChild.push(secondParent[d])
-        }
-        if(!gensForSecondChild.has(firstParent[d])) {
-            secondChild.push(firstParent[d])
-        }
-    }
-    if(firstChild.length !== firstParent.length){
-        for(let d = 2; d < firstParent.length - 1; d++) {
-            if(!gensForFirstChild.has(firstParent[d])) {
-                firstChild.push(firstParent[d])
+        let copy = {x: firstParent[k].x, y: firstParent[k].y};
+        firstChild.push(copy);
+        for(let s  = 0; s < secondParent.length; s++) {
+            if(equal.default(secondParent[s], firstParent[k])) {
+                secondParent[s] = -1;
+                firstParent[k] = -1;
             }
         }
     }
-    if(secondChild.length !== secondParent.length){
-        for(let d = 2; d < secondParent.length - 1; d++) {
-            if(!gensForSecondChild.has(secondParent[d])) {
-                secondChild.push(secondParent[d])
+    for(let d = 2; d < secondParent.length; d++) {
+        if (secondParent[d] !== -1) {
+            let copy = {x: secondParent[d].x, y: secondParent[d].y};
+            firstChild.push(copy);
+            for(let s  = 0; s < firstParent.length; s++) {
+                if(equal.default(secondParent[d], firstParent[s])) {
+                    secondParent[d] = -1;
+                    firstParent[s] = -1;
+                }
+            }
+        }
+    }
+
+    for(let f = 2; f < firstParent.length; f++) {
+        if (firstChild.length !== firstParent.length) {
+            if (firstParent[f] !== -1) {
+                let copy = {x: firstParent[f].x, y: firstParent[f].y};
+                firstChild.push(copy);
+                firstParent[f] = -1;
+                for(let s  = 0; s < secondParent.length; s++) {
+                    if(equal.default(secondParent[s], firstParent[f])) {
+                        secondParent[s] = -1;
+                        firstParent[f] = -1;
+                    }
+                }
             }
         }
     }
     firstChild = mutation(firstChild);
-    secondChild = mutation(secondChild);
+
     population.push({path: firstChild, lengthPath: pathCalculation(firstChild)});
-    population.push({path: secondChild, lengthPath: pathCalculation(secondChild)});
+
     return population;
 }
 
 export function populationSort(population) {
-    population.sort((a, b) => a.length - b.length);
+    population.sort((a, b) => a.lengthPath - b.lengthPath);
     return population;
 }
 
-export function geneticFunction(points) {
+export async function geneticFunction(points, callback) {
     let population = populationGeneration(populationCount(points), points);
-    population = [...childrenGeneration([...population])];
-    population = [...populationSort([...population]).pop().pop()];
+    for(let i = 0; i < populationCount(points); i++) {
+        population = [...childrenGeneration([...population])];
+        population = populationSort([...population]);
+        population.pop();
+        if(i === populationCount(points) - 1) callback(population[0])
+        else callback(population[points.length - 2]);
+    }
     return population;
 }
 

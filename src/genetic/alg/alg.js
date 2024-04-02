@@ -1,8 +1,7 @@
 import drawMashIntoCanvas from "../../shared/ui/drawMashIntoCanvas.js";
 import {BackStack} from "../../shared/actionBackStack.js";
 import drawPoint from "../../shared/ui/drawPoint.js";
-import {geneticFunction} from "./geneticFunction.js";
-import {runTests} from "./testGenetic.js";
+import {geneticFunction, populationCount} from "./geneticFunction.js";
 
 const pointRadius = 10;
 const mashSize = 60;
@@ -17,6 +16,8 @@ const ctx = canvas.getContext('2d');
 
 const backStackApi = new BackStack();
 let points = [];
+let currentPathStack = [];
+let isPending = false;
 
 function render() {
 
@@ -45,26 +46,59 @@ function render() {
             containerLengths.appendChild(para);
         }
     }
+    if(currentPathStack.length > 0) {
+        for(let d = 0; d < currentPathStack[0].length - 1; d++) {
+            ctx.beginPath();
+            ctx.moveTo(currentPathStack[0][d].x, currentPathStack[0][d].y);
+            ctx.lineTo(currentPathStack[0][d + 1].x, currentPathStack[0][d + 1].y);
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 5;
+            ctx.stroke();
+            ctx.closePath();
+            ctx.lineWidth = 1;
+        }
+    }
 }
 
 document.addEventListener('keyup', (e) => {
     if((e.ctrlKey && e.key === "z") || (e.ctrlKey && e.key === "я")) {
         points = [...backStackApi.popAction().snapshot];
-        render();
+        currentPathStack = [];
+        isPending = true
+        render()
+        isPending = false;
     }
 })
 
 canvas.addEventListener('click',(e) => {
+    if(isPending) return;
     const x = e.x - canvasBounds.x - pointRadius/2;
     const y = e.y - canvasBounds.y - pointRadius/2;
     backStackApi.pushAction("add_point", [...points]);
     points.push({ x: x, y: y });
-    render();
+    render()
+    isPending = false;
 });
 
-document.querySelector("#bsbtn").addEventListener("click", () => {
+const delay = (delayInms) => {
+    return new Promise(resolve => setTimeout(resolve, delayInms));
+};
 
+document.querySelector("#start").addEventListener("click", () => {
+    if(isPending) return;
+    geneticFunction(points, (path)=> {
+        currentPathStack.push([...path.path.map(it => ({...it})), {...path.path[0]}])
+    }).then(async () => {
+        isPending = true;
+        while(currentPathStack.length > 0) {
+            console.log(currentPathStack[0]);
+            render()
+            currentPathStack.splice(0, 1)
+            await delay(0);
+        }
+        isPending = false;
+    });
 })
-render();
-runTests();
+render()
+isPending = false;
 
