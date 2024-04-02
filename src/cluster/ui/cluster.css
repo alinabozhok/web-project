@@ -1,9 +1,66 @@
-.header{
-    align-content: center;
+
+@font-face {
+    font-family: jomhuria-web;
+    src: url("Jomhuria-Regular.woff2");
 }
-#canvas {
-    border: 1px solid black;
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 20px;
+
+header {
+    margin-right: 124vh;
+    margin-top: 2vh;
+    position: absolute;
+}
+
+
+
+body {
+    font-family: jomhuria-web;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #E0DBD0;
+}
+label{
+    font-family: jomhuria-web;
+    color: #441f0b;
+    font-size: 25px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-left :10px;
+}
+
+canvas {
+    background-color: #e7e9e9;
+    border: 3px solid black;
+    margin-top: 20px;
+}
+#clusterButton,#clearButton, #clusterCount{
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    border: none;
+    padding: 0 38.6px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 7px;
+    background-color: #a27c64;
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+    box-shadow: 0 4px 14px 0 rgb(185, 161, 145);
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#clusterButton:hover, #clearButton:hover{
+    background: rgb(183, 157, 133);
+    box-shadow: 0 6px 20px rgb(96, 73, 64);
+}
+#buttonsBlock{
+
 }
