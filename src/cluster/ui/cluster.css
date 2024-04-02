@@ -22,15 +22,14 @@ body {
     margin: 0;
     background-color: #E0DBD0;
 }
-label{
+#clusterCountCover{
     font-family: jomhuria-web;
     color: #441f0b;
     font-size: 25px;
     letter-spacing: 1px;
     display: flex;
-    align-items: center;
-    margin-right: 10px;
-    margin-left :10px;
+    text-align: left;
+    margin-right: 25%;
 }
 
 canvas {
@@ -53,7 +52,7 @@ canvas {
     font-size: 16px;
     box-shadow: 0 4px 14px 0 rgb(185, 161, 145);
     transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-    text-align: center;
+
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -62,5 +61,14 @@ canvas {
     box-shadow: 0 6px 20px rgb(96, 73, 64);
 }
 #buttonsBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
+
+#buttonsBlock input,
+#buttonsBlock button{
+    width: 100%;
+    margin-bottom: 10px;
 }
