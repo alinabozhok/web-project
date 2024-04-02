@@ -48,13 +48,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+    function getRandomColor() {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
     function drawClusters(clusters) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        clusters.forEach((cluster, index) => {
+        clusters.forEach(cluster => {
+            const color = getRandomColor(); // Получаем случайный цвет для кластера
             cluster.forEach(point => {
                 ctx.beginPath();
                 ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-                ctx.fillStyle = `hsl(${360 * index / clusters.length}, 100%, 50%)`;
+                ctx.fillStyle = color;
                 ctx.fill();
                 ctx.closePath();
             });
