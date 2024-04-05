@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: jomhuria-web;
+    src: url("Jomhuria-Regular.woff2");
+}
+
+body {
+    font-family: jomhuria-web;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #E0DBD0;
+}
+
+h1 {
+    font-family: jomhuria-web;
+    color: #441f0b;
+    font-size: 70px;
+    letter-spacing: 3px;
+    margin-top: 5vh;
+}
+
+h2 {
+    font-family: jomhuria-web;
+    color: #441f0b;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+h3 {
+    font-family: jomhuria-web;
+    color: #b7571b;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+    /*CANVAS*/
+
+.canvas-container {
+    width: 400px;
+    margin-top: 7vh;
+    margin-right: 400px;
+    text-align: center;
+}
+canvas {
+    background-color: #ffffff;
+    border: 3px solid black;
+}
+
+    /*CROPPED CANVAS*/
+.cropped-canvas-container {
+    width: 400px;
+    text-align: center;
+    position: absolute;
+    margin-top: 370px;
+    margin-left: 800px;
+}
+
+    /*SLIDER*/
+
+.slider-container {
+    width: 400px;
+    display: contents;
+    text-align: center;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: #c98345;
+    outline: none;
+    opacity: 0.6;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #9f5125;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #9f5125;
+    cursor: pointer;
+}
+
+    /*BUTTONS*/
+
+button {
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    border: none;
+    padding: 0 25px;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 7px;
+    background-color: #a27c64;
+    color: white;
+    font-weight: 400;
+    font-size: 14px;
+    box-shadow: 0 4px 14px 0 rgb(185, 161, 145);
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    background: rgb(183, 157, 133);
+    box-shadow: 0 6px 20px rgb(96, 73, 64);
+}
+
+    /*ARROW*/
+#arrow {
+    width: 7%;
+    position: absolute;
+    margin-top: 400px;
+    margin-left: 300px;
+}

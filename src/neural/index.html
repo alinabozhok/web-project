@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITS GUESSER</title>
+    <link rel="stylesheet" href="./ui/style.css">
+    <script src="./ui/main.js"></script>
+
+</head>
+
+<body>
+<h1>NEURAL NETWORK / DIGITS GUESSER</h1>
+<div class="canvas-container">
+
+    <div class="slider-container">
+        <input type="range" min="5" max="25" step = "1" value="15" class="slider" id="brush-width">
+        <h2>BRUSH WIDTH: <span id="width-value"> px</span></h2>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let sliderSize = document.getElementById("brush-width");
+            let outputSize = document.getElementById("width-value");
+            outputSize.innerHTML = sliderSize.value;
+
+            sliderSize.oninput = function() {
+                outputSize.innerHTML = this.value;
+            }
+        });
+    </script>
+
+    <canvas width="400" height="400" id="canvas"></canvas>
+    <button id="clear">CLEAR</button>
+</div>
+<img src="../assets/arrow.svg" alt="" id="arrow">
+<div class="cropped-canvas-container">
+    <h2>HOW NEURAL NETWORK SEE THE IMAGE:</h2>
+    <canvas id="croppedCanvas" width="50" height="50"></canvas>
+    <h3>GUESSED DIGIT: <label id="guessedDigitOutput"></label> </h3>
+</div>
+
+</body>
+</html>
