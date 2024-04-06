@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
         startCell = null;
         endCell = null;
 
-        canvas.width = 800;
-        canvas.height = 800;
+        canvas.width = 700;
+        canvas.height = 700;
 
-        cellSize = 800 / size;
+        cellSize = 700 / size;
 
         ctx.beginPath();
         for (let i = 0; i < size; i++) {
