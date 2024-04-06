@@ -124,14 +124,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Запуск алгоритма
     document.getElementById('run-button').addEventListener('click', async function () {
-        for (let i = 0; i < parseInt(sizeInput.value); i++) {
-            for (let j = 0; j < parseInt(sizeInput.value); j++) {
-                if (grid[i][j] !== 1 && grid[i][j] !== 2 && grid[i][j] !== 3) {
-                    updateCell(i,j);
+        if (startCell && endCell) {
+            for (let i = 0; i < parseInt(sizeInput.value); i++) {
+                for (let j = 0; j < parseInt(sizeInput.value); j++) {
+                    if (grid[i][j] !== 1 && grid[i][j] !== 2 && grid[i][j] !== 3 && (i !== (parseInt(sizeInput.value) - 1) || j !== (parseInt(sizeInput.value) - 1))) {
+                        updateCell(i,j);
+                    }
                 }
             }
-        }
-        if (startCell && endCell) {
             let totalPath = await aStar(grid, startCell, endCell);
             if (totalPath.length === 0) {
                 alert("Путь не найден.");
@@ -268,8 +268,6 @@ document.addEventListener('DOMContentLoaded', function () {
             grid[endCell.row][endCell.col] = 0;
             updateCell(endCell.row, endCell.col);
         }
-        startCell = null;
-        endCell = null;
 
         for (let i = 0; i < parseInt(sizeInput.value); i++) {
             for (let j = 0; j < parseInt(sizeInput.value); j++) {
