@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         path = '';
         isMouseDown = false;
         cropImage();
+        performInference();
     }
 
     function draw() {
@@ -92,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         croppedCtx.clearRect(0, 0, croppedCanvas.width, croppedCanvas.height);
         croppedCtx.drawImage(canvas, minX, minY, croppedWidth, croppedHeight, offsetX, offsetY, scaledWidth, scaledHeight);
-        performInference();
     }
 
     // Преобразовываем изображение в одномерный массив
