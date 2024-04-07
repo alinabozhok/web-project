@@ -1,4 +1,4 @@
-export function receiveData(csvText, sep = ","){
+function receiveData(csvText, sep = ","){
 
     let matrix = [];
     let csvLines = csvText.split('\n');

@@ -1,18 +1,31 @@
 
+@font-face {
+    font-family: jomhuria-web;
+    src: url("Jomhuria-Regular.woff2");
+}
 
 body {
-    font-family: "SB Sans", normal;
-    background-color: #183737;
-    color: rgb(200, 255, 255);
+    font-family: jomhuria-web;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #E0DBD0;
+    font-size: 25px;
 }
 
 * {
-    font-family: 'SB Sans';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
 
 a, a:visited, a:hover {
     text-decoration: none;
-    color: #fff;
+    color:black;
 }
 
 .wrapper {
@@ -28,7 +41,7 @@ a, a:visited, a:hover {
     align-items:center;
     margin-left: auto;
     margin-right: 20px;
-    background-color: #3f7a7a;
+    background-color: #a27c64;
     border-radius: 10px;
     width: 323px;
 }
@@ -58,7 +71,7 @@ input{
     overflow: scroll;
     width: 1000px;
     height: 600px;
-    background-color: #3f7a7a;
+    background-color: gray;
     border-radius: 10px;
     display: block;
     margin-left: auto;
@@ -74,26 +87,26 @@ input{
     display: block;
     width: 1000px;
     height: 600px;
-    background-color: white;
-    margin: 0 auto 0 auto;
+    background-color: #e7e9e9;
+    border: 3px solid black;
+
 }
 
 .button-section {
     margin-top: 10px;
+    font-size: 35px
 }
 
 button, label {
-    font-family: "SB Sans";
-    color: #191837;
+    font-family: jomhuria-web;
+    color: white;
     width: 260px;
     height: 50px;
-    font-size: large;
-    font-weight: bold;
-    border: 0px solid rgb(200, 255, 255);
+    font-size: 30px;
     border-radius: 10px;
-    background-color: rgb(200, 255, 255);
+    background-color: #a27c64;
     margin-bottom: 10px;
-
+    box-shadow: 0 4px 14px 0 rgb(185, 161, 145);
     text-align: center;
     display: block;
 }
@@ -165,7 +178,7 @@ button:active, label:active {
 }
 
 .tree li a{
-    background: rgb(200, 255, 255);
+    background-color: #a27c64;
     border: 0px;
     min-width: 200px;
     max-width: min-content;
@@ -187,7 +200,7 @@ button:active, label:active {
     width: 400px;
     transform: rotate(-15deg) translateX(-15px) translateY(-20px);
 
-    background-color: #8bffff56;
+    background-color: #a27c64;
 }
 
 .back-link {
@@ -204,12 +217,16 @@ button:active, label:active {
 }
 
 h1 {
+    font-family: jomhuria-web;
+    color: #441f0b;
+    font-size: 70px;
+    letter-spacing: 3px;
     text-align: center;
-    font-size: 50px;
-    color: rgb(200, 255, 255);
 }
 
 textarea {
-    background-color: rgb(200, 255, 255);
+    font-family: jomhuria-web;
+    font-size: 25px;
+    background-color: #a27c64;
     border-radius: 10px;
 }

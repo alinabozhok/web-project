@@ -1,13 +1,10 @@
-
-start_button = document.getElementById('start_button');
- reset_button = document.getElementById('reset_button');
- getFile1_button = document.getElementById('getFile1_button');
- getFile2_button = document.getElementById('getFile2_button');
- getFile3_button = document.getElementById('getFile3_button');
- getFile_button = document.getElementById('getFile_button');
- //optimize_button = document.getElementById('optimize_button');
- zoom = document.getElementById('zoom');
-
+start_button.addEventListener('click', start);
+reset_button.addEventListener('click', reset);
+getFile1_button.addEventListener('click', chooseIndex0);
+getFile2_button.addEventListener('click', chooseIndex1);
+getFile3_button.addEventListener('click', chooseIndex2);
+getFile_button.addEventListener('click', createTree);
+optimize_button.addEventListener('click', optimize);
 const FILE = document.getElementById('file_input');
 let flag = true;
 let root;
@@ -19,7 +16,6 @@ function chooseIndex0() {
     document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
     index = 0;
     createTree();
-
 }
 
 function chooseIndex1() {
@@ -49,7 +45,7 @@ function createTree() {
         let reader = new FileReader();
         reader.readAsText(dataBase);
         reader.onload = function () {
-            dataBase = receiveData(reader.result);
+            dataBase = recieveData(reader.result);
             startTreeBuilding(dataBase);
             drawTree(root, treeRoot);
         }
@@ -61,7 +57,6 @@ function start() {
     if(flag) {
         makeDecision();
     }
-    alert("penis");
 }
 
 function reset() {
