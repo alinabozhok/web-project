@@ -1,24 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decision Tree</title>
-    <link rel="stylesheet" href="solution_tree.css">
-</head>
-<body>
-<h1>Decision Tree</h1>
-<div>
-    <textarea id="trainingData" placeholder="Введите обучающую выборку в формате CSV"></textarea>
-    <button onclick="buildTree()">Построить дерево</button>
-</div>
-<div id="decisionTree"></div>
-<div>
-    <textarea id="testData" placeholder="Введите данные для принятия решения в формате CSV"></textarea>
-    <button onclick="makeDecision()">Принять решение</button>
-</div>
-<div id="decisionResult"></div>
-
-<script src="../alg/solution_tree.js"></script>
-</body>
+<html>
+<meta lang = "en">
+<meta charset="UTF-8"/>
 </html>
+<head>
+    <title>Solution Tree</title>
+    <link rel="stylesheet" href="solution_tree.css">
+
+</head>
+
+<body>
+<h1>Дерево Решений</h1>
+<div class="back">
+    <p></p>
+    <a class="back-link" href="../../../index.html" target="_self"><b>Вернуться на главную</b></a>
+    <p></p>
+</div>
+
+<div class="wrapper" id="wrapper">
+    <div class="toolbar">
+        <div class="build-tree">
+            <div class="button-section"><b>Построить дерево:</b></div>
+            <button id="getFile1_button"> Построить дерево 1</button>
+            <button id="getFile2_button"> Построить дерево 2</button>
+            <button id="getFile3_button"> Построить дерево 3</button>
+            <button id="getFile_button">Построить своё дерево</button>
+        </div>
+
+        <div class="work-tree">
+            <div class="button-section"><b>Работа с деревом:</b></div>
+            <button id="start_button">Запустить обход</button>
+            <button id="reset_button">Очистить все</button>
+            <button id="optimize_button">Оптимизировать</button>
+            <input id="file_input" type="file">
+            <label class="label" for='file_input'>Загрузить файл с обучающей выборкой</label>
+        </div>
+
+        <div class="textbox">
+            <div class="button-section"><b>Ваш запрос:</b></div>
+            <textarea id="input_data" name="input_data" cols="40" rows="5"></textarea></p>
+        </div>
+
+
+
+    </div>
+    <div class="canvas">
+        <div class="tree" id="tree">
+            <ul id="root">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script src="../alg/receiveData.js"></script>
+<script src="../alg/data.js"></script>
+<script src="../alg/solution_tree.js"></script>
+<!-- <script src="./bonus.js"></script>-->
+<script src="../alg/interface.js"></script>
+
+</body>
