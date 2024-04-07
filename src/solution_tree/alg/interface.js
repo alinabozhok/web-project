@@ -45,7 +45,7 @@ function createTree() {
         let reader = new FileReader();
         reader.readAsText(dataBase);
         reader.onload = function () {
-            dataBase = recieveData(reader.result);
+            dataBase = receiveData(reader.result);
             startTreeBuilding(dataBase);
             drawTree(root, treeRoot);
         }
