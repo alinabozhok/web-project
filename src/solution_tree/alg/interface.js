@@ -61,6 +61,7 @@ function start() {
 
 function reset() {
     treeRoot = removeTree(treeRoot);
+    FILE.value='';
 }
 
 
@@ -101,23 +102,7 @@ function drawTree(currentNode, treeElement) {
 }
 
 function optimize() {
-    if(flag) {
-        if (FILE.value === '') {
-            root = new TreeNode(getData(index), 'root');
-        } else {
-            let data = FILE.files[0];
-            let reader = new FileReader();
-            reader.readAsText(data);
-            reader.onload = function () {
-                data = recieveData(reader.result);
-                root = new TreeNode(data, 'root');
-            }
-        }
-        buildTree(root);
-        optimizeTree(root);
-        document.getElementById("root").innerHTML = "";
-        drawTree(root, treeRoot);
-    }
+
 }
 
 function removeTree() {
