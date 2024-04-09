@@ -1,4 +1,4 @@
-import {clearCanvas} from "../../shared/ui/clearCanvas.js";
+import { clearCanvas } from "../../shared/ui/clearCanvas.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('canvas');
@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const clusterButton = document.getElementById('clusterButton');
     let points = [];
     let clusterCount = parseInt(document.getElementById('clusterCount').value);
+    let centroids = [];
 
     clusterCountInput.addEventListener('change', function() {
         clusterCount = parseInt(clusterCountInput.value);
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     clearButton.addEventListener("click", function (){
         clearCanvas(canvas,ctx);
         points.length = 0;
+        centroids.length = 0;
     });
 
     clusterButton.addEventListener('click', function() {
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("K's more than points");
             return;
         }
+        centroids = getRandomCentroids(points, clusterCount); // Initialize centroids before clustering
         const clusters = kMeansClustering(points, clusterCount);
         drawClusters(clusters);
     });
@@ -57,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function drawClusters(clusters) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        clusters.forEach(cluster => {
-            const color = getRandomColor(); // Получаем случайный цвет для кластера
+        clusters.forEach((cluster, index) => {
+            const color = getRandomColor();
             cluster.forEach(point => {
                 ctx.beginPath();
                 ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
@@ -66,11 +69,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 ctx.fill();
                 ctx.closePath();
             });
+
+            const centroid = centroids[index];
+            ctx.beginPath();
+            ctx.moveTo(centroid.x, centroid.y - 7);
+            ctx.lineTo(centroid.x - 5, centroid.y + 4);
+            ctx.lineTo(centroid.x + 5, centroid.y + 4);
+            ctx.closePath();
+            ctx.fillStyle = 'black';
+            ctx.fill();
         });
     }
 
     function kMeansClustering(points, k) {
-        let centroids = getRandomCentroids(points, k);
+        centroids = getRandomCentroids(points, k);
         let clusters = Array.from({ length: k }, () => []);
 
         while (true) {
