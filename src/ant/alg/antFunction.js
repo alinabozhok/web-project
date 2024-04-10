@@ -46,7 +46,7 @@ export function vertexSelection(probability, visited) {
     let count = 0;
     for(let i = 0; i < probability.length; i++) {
         if(!visited.includes(i)){
-            count = Math.round(probability[i]*1000000)
+            count = Math.round(probability[i]*10000000)
             for(let j = 0; j < count; j++) {
                 range.push(i);
             }
