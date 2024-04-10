@@ -25,7 +25,7 @@ function chooseIndex1() {
 }
 
 function chooseIndex2() {
-    document.getElementById('input_data').value = "TANG,ON DINH,CAO,TB";
+    document.getElementById('input_data').value = "Солнечно, Жарко, Высокая";
     index = 2;
     createTree();
 }

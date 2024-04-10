@@ -80,7 +80,7 @@ input{
 
 #answer:focus, #answer:hover{
     outline: none;
-    background-color: #247ABF;
+    background-color: green;
 }
 
 .canvas {
