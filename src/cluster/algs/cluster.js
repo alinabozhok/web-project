@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-    canvas.addEventListener('click', function(event) {
+    canvas.addEventListener('mousedown', function(event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("K's more than points");
             return;
         }
-        centroids = getRandomCentroids(points, clusterCount); // Initialize centroids before clustering
+        centroids = getRandomCentroids(points, clusterCount);
         const clusters = kMeansClustering(points, clusterCount);
         drawClusters(clusters);
     });
