@@ -105,6 +105,8 @@ function optimize() {
 
 }
 
+
+
 function removeTree() {
     let divTree = document.getElementById("tree");
     treeRoot.remove();

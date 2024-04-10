@@ -13,8 +13,8 @@ class TreeNode{
     };
 
     isLeaf(){
-        if(this.children == undefined){return true;}
-        if(this.children.length == 0){ return true;}
+        if(this.children === undefined){return true;}
+        if(this.children.length === 0){return true;}
         return false;
     }
 }
@@ -55,19 +55,19 @@ async function makeDecision() {
     }
     let currentNode = root;
     let counter = root.data[0].length;
-    while(currentNode != undefined) {
+    while(currentNode !== undefined) {
         if(!currentNode.visited){
             currentNode.visited = true;
-            await gradient('rgb(108, 206, 206)', currentNode);
+            await gradient('rgb(0, 128, 0)', currentNode);
             await sleep(100);
             if(currentNode.finalA !== undefined){
-                await gradientForFinal('rgb(108, 206, 206)', currentNode.finalA);
+                await gradientForFinal('rgb(0, 128, 0)', currentNode.finalA);
                 await sleep(100);
             }
         }
-        if (doubleDecision(currentNode, array) != -1) {
+        if (doubleDecision(currentNode, array) !== -1) {
             currentNode = currentNode.children[doubleDecision(currentNode, array)];
-        } else if (currentNode!= undefined) {
+        } else if (currentNode !== undefined) {
             for(let j = 0; j < currentNode.children.length; j++) {
                 if(array.includes(currentNode.children[j].name) || currentNode.decisionMaker === root.data[0][root.data[0].length - 1] || currentNode.decisionMaker === root.data[0][root.data]) {
                     currentNode = currentNode.children[j];
@@ -75,9 +75,9 @@ async function makeDecision() {
                 }
             }
         }
-        if (currentNode != undefined && currentNode.name !== "root" && currentNode.parent.decisionMaker === root.data[0][root.data[0].length-1] && ! currentNode.visited)  {
+        if (currentNode !== undefined && currentNode.name !== "root" && currentNode.parent.decisionMaker === root.data[0][root.data[0].length-1] && ! currentNode.visited)  {
             currentNode.visited = true;
-            await gradient('rgb(108, 206, 206)', currentNode);
+            await gradient('rgb(0, 128, 0)', currentNode);
             break;
         }
         counter--;
@@ -89,25 +89,13 @@ async function makeDecision() {
 }
 
 async  function gradientForFinal(RGB, finalAnswer){
-    let rgb = getRGB(RGB);
-    finalA.style.backgroundColor = 'rgb('+ rgb[0] +','+ rgb[1] +','+ rgb[2] +')';
+    finalAnswer.style.backgroundColor = RGB;
     await sleep(100);
 }
 
 async function gradient(RGB, node) {
-    let rgb = getRGB(RGB);
-    node.a.style.backgroundColor = 'rgb('+ rgb[0] +','+ rgb[1] +','+ rgb[2] +')';
+    node.a.style.backgroundColor = RGB;
     await sleep(100);
-}
-
-function getRGB(str){
-    let regex = /\d{1,3}/;
-    let rgb = [];
-    for(let i = 0; i<3; i++) {
-        rgb[i] = parseFloat(regex.exec(str));
-        str = str.replace(regex, "")
-    }
-    return rgb
 }
 
 function  sleep(ms){
@@ -115,7 +103,7 @@ function  sleep(ms){
 }
 
 function doubleDecision(currentNode, array) {
-    if (currentNode != undefined && currentNode.children[0] != undefined) {
+    if (currentNode !== undefined && currentNode.children[0] !== undefined) {
         if (currentNode.children[0].name[0] === "<") {
             let num = currentNode.children[0].name;
             num = num.replace('<', '');
@@ -133,7 +121,6 @@ function doubleDecision(currentNode, array) {
         }
     }
     return;
-
 }
 
 function chooseSplittingParameter(matrix) {
@@ -326,7 +313,7 @@ function chooseSplittingParameter(matrix) {
 
         for (let i =1 ; i<numsSorted.length; i++){
             if(numsSorted[i-1].value === numsSorted[i].value){
-                if (numsSorted[i-1].celVal === numsSorted[i].celVal){
+                if (numsSorted[i-1].celValue === numsSorted[i].celValue){
                     numsSorted.splice(i,1);
                     i--;
                 }
