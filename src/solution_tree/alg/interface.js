@@ -35,12 +35,11 @@ startTreeBuilding(getData(index));
 let treeRoot = document.getElementById("root");
 
 function createTree() {
-    treeRoot = removeTree();
-    if(FILE.value === '') {
+    rerenderTree();
+    if (FILE.value === '') {
         startTreeBuilding(getData(index));
         drawTree(root, treeRoot);
-    }
-    else {
+    } else {
         let dataBase = FILE.files[0];
         let reader = new FileReader();
         reader.readAsText(dataBase);
@@ -49,21 +48,22 @@ function createTree() {
             startTreeBuilding(dataBase);
             drawTree(root, treeRoot);
         }
+
     }
+
     flag = true;
 }
 
 function start() {
-    if(flag) {
+    if (flag) {
         makeDecision();
     }
 }
 
 function reset() {
-    treeRoot = removeTree(treeRoot);
-    FILE.value='';
+    treeRoot = rerenderTree(treeRoot);
+    FILE.value = '';
 }
-
 
 
 function drawTree(currentNode, treeElement) {
@@ -72,17 +72,16 @@ function drawTree(currentNode, treeElement) {
     currentNode.a = a;
     a.href = "#";
     let nodeName = currentNode.name;
-    if(nodeName === "root") {
+    if (nodeName === "root") {
         a.textContent = nodeName;
-    }
-    else {
+    } else {
         let feature = currentNode.parent.decisionMaker;
         a.textContent = feature + " : " + nodeName;
     }
 
     li.appendChild(a);
     treeElement.appendChild(li);
-    if(currentNode.isleaf || currentNode.isLeaf()) {
+    if (currentNode.isleaf || currentNode.isLeaf()) {
         let finalUl = document.createElement("ul");
         let finalLi = document.createElement("li");
         let finalA = document.createElement("a");
@@ -106,27 +105,52 @@ function optimize() {
 }
 
 
-
-function removeTree() {
-    let divTree = document.getElementById("tree");
-    treeRoot.remove();
-    let ul = document.createElement("ul");
-    ul.setAttribute('id', 'root')
-    divTree.appendChild(ul);
-    return ul;
-}
-
-drawTree(root, treeRoot);
-
-const list = document.getElementById('root');
-
-list.addEventListener('wheel', function(event) {
+// Объявим функцию scrollEvent за пределами rerenderTree
+function scrollEvent(event) {
+    // Блокируем стандартное поведение скроллинга
     event.preventDefault();
 
     const delta = Math.sign(event.deltaY);
-    const zoomValue = parseFloat(window.getComputedStyle(list).zoom) || 1;
+    const zoomValue = parseFloat(window.getComputedStyle(treeRoot).zoom) || 1;
 
     if (zoomValue - delta > 0.1 && zoomValue - delta < 5) {
-        list.style.zoom = zoomValue - delta;
+        treeRoot.style.zoom = zoomValue - delta;
     }
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const treeDiv = document.getElementById("tree");
+
+    let root = document.createElement("ul");
+    root.setAttribute('id', 'root');
+
+    root.addEventListener("wheel", scrollEvent);
+
+    treeDiv.appendChild(root);
+});
+
+// Функция перерисовки дерева
+function rerenderTree() {
+    let divTree = document.getElementById("tree");
+    treeRoot.removeEventListener("wheel", scrollEvent);
+    treeRoot.remove();
+    let root = document.createElement("ul");
+    root.setAttribute('id', 'root');
+    root.addEventListener("wheel", scrollEvent);
+    divTree.appendChild(root);
+    treeRoot = root;
+}
+
+
+drawTree(root, treeRoot);
+
+window.addEventListener('unload', function(event) {
+
+    FILE.value = '';
+    FILE.files = null;
+
+    event.preventDefault();
+    event.returnValue = '';
 });

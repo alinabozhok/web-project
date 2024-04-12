@@ -5,7 +5,7 @@ function receiveData(csvText, sep = ","){
     let currRow;
     for (let i = 0; i < csvLines.length - 1; i++) {
 
-        let line = csvLines[i];
+        let line = csvLines[i].replace(/"/g, '');
         let cells = line.split(sep);
         currRow = [];
         for (let j = 0; j < cells.length; j++) {
