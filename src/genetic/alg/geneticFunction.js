@@ -1,10 +1,8 @@
-import * as equal from "fast-deep-equal"
+//import * as equal from "fast-deep-equal"
 
-const inputPopulation = document.getElementsByClassName('countPopulation');
-const populationSize = inputPopulation.value;
+const inputPopulation = document.querySelector('#countPopulation');
+const inputPercentageMutation = document.querySelector('#mutationPercentage');
 
-const inputPercentageMutation = document.getElementsByClassName('mutationPercentage');
-const percentageMutation = inputPercentageMutation.value;
 
 export function pathGeneration(points) {
     let randomPath = [...points];
@@ -26,6 +24,7 @@ export function pathCalculation(path) {
 }
 
 export function populationGeneration(points) {
+    const populationSize = inputPopulation.value;
     let population = [];
     for(let i = 0; i < populationSize; i++) {
         let path = pathGeneration(points);
@@ -37,8 +36,9 @@ export function populationGeneration(points) {
 
 export function mutation(child){
     let newChild = [...child];
-
-    if(pathCalculation(newChild) < percentageMutation) {
+    const percentageMutation = inputPercentageMutation.value;
+    let mutationChild = Math.floor(Math.random() * 100);
+    if(mutationChild < percentageMutation) {
         let i = Math.floor(Math.random() * newChild.length);
         let j = i;
         while (i === j) {
@@ -50,8 +50,8 @@ export function mutation(child){
 }
 
 export function childrenGeneration2(population) {
-    console.log(population);
-    for(let i = 0; i < population.length - 1; i++) {
+    const populationSize = inputPopulation.value;
+    for(let i = 0; i < populationSize - 1; i++) {
         let firstParent = [...(population[i]).path];
         let secondParent = [...(population[i + 1]).path];
 
@@ -61,20 +61,25 @@ export function childrenGeneration2(population) {
 
         for(let k = 0; k < breakPoint; k++) {
             let copy = {x: firstParent[k].x, y: firstParent[k].y};
-            newChild.push(firstParent[k]);
-            usedGens.push(firstParent[k]);
+            newChild.push(copy);
+            usedGens.push(firstParent[k].x);
+            usedGens.push(firstParent[k].y);
         }
         for(let d = 2; d < secondParent.length; d++) {
-            if (!usedGens.includes(secondParent[d])) {
-                newChild.push(secondParent[d]);
-                usedGens.push(secondParent[d]);
+            if (!usedGens.includes(secondParent[d].x) && !usedGens.includes(secondParent[d].y)) {
+                let copy = {x: secondParent[d].x, y: secondParent[d].y};
+                newChild.push(copy);
+                usedGens.push(secondParent[d].x);
+                usedGens.push(secondParent[d].y);
             }
         }
         for(let f = breakPoint; f < firstParent.length; f++) {
             if (newChild.length !== firstParent.length) {
-                if (!usedGens.includes(firstParent[f])) {
-                    newChild.push(firstParent[f]);
-                    usedGens.push(firstParent[f]);
+                if (!usedGens.includes(firstParent[f].x) && !usedGens.includes(firstParent[f].y)) {
+                    let copy = {x: firstParent[f].x, y: firstParent[f].y};
+                    newChild.push(copy);
+                    usedGens.push(firstParent[f].x);
+                    usedGens.push(firstParent[f].y);
                 }
             }
         }
@@ -147,15 +152,16 @@ export function populationSort(population) {
 }
 
 export async function geneticFunction(points, callback) {
+    const populationSize = inputPopulation.value;
     let population = populationGeneration(points);
-    for(let i = 0; i < 2000; i++) {
+    for(let i = 0; i < 700; i++) {
         population = [...childrenGeneration2([...population])];
         population = populationSort([...population]);
         while(population.length > populationSize) {
             population.pop();
         }
         if(i === populationSize - 1) callback(population[0])
-        else callback(population[points.length - 2]);
+        else callback(population[population.length - 1]);
     }
     return population;
 }

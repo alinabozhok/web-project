@@ -28,6 +28,7 @@ function render() {
             ctx.beginPath();
             ctx.moveTo(points[k].x, points[k].y);
             ctx.lineTo(points[j].x, points[j].y);
+            ctx.strokeStyle = "#90989B";
             ctx.stroke();
             ctx.closePath();
         }

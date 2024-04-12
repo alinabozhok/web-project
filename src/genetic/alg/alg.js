@@ -2,6 +2,7 @@ import drawMashIntoCanvas from "../../shared/ui/drawMashIntoCanvas.js";
 import {BackStack} from "../../shared/actionBackStack.js";
 import drawPoint from "../../shared/ui/drawPoint.js";
 import {geneticFunction} from "./geneticFunction.js";
+import {runTests} from "./testGenetic.js";
 
 
 const pointRadius = 10;
@@ -87,17 +88,18 @@ const delay = (delayInms) => {
 };
 
 document.querySelector("#start").addEventListener("click", () => {
+    runTests();
     if(isPending) return;
     geneticFunction(points, (path)=> {
         currentPathStack.push([...path.path.map(it => ({...it})), {...path.path[0]}])
     }).then(async () => {
         isPending = true;
         while(currentPathStack.length > 0) {
-            console.log(currentPathStack[0]);
             render()
             currentPathStack.splice(0, 1)
             await delay(0);
         }
+        console.log("end");
         isPending = false;
     });
 })

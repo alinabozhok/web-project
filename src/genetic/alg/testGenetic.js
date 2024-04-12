@@ -1,5 +1,5 @@
 import {
-
+    populationGeneration
 } from "./geneticFunction.js";
 
 function logTestResult(label, input, output, result) {
@@ -12,7 +12,7 @@ function logTestResult(label, input, output, result) {
 }
 
 
-function testChildrenGeneration() {
+function testPopulationGeneration() {
     const points = [
         {x: 136, y: 524},
         {x: 245, y: 456},
@@ -21,9 +21,9 @@ function testChildrenGeneration() {
         {x: 24, y: 345},
         {x: 57, y: 200}
     ]
-    const result = mutation(points);
+    const result = populationGeneration(points);
     logTestResult(
-        "Тестирование мутации",
+        "Генерация популяции",
         points,
         result,
         (result.length === points.length)
@@ -34,5 +34,5 @@ function testChildrenGeneration() {
 
 
 export function runTests() {
-
+    testPopulationGeneration();
 }
