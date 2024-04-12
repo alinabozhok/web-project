@@ -48,9 +48,6 @@ function  buildTree(node){
 }
 
 async function makeDecision() {
-    // Clear previous visualizations
-    clearVisualizations(root);
-
     let string = document.getElementById('input_data').value;
     let array = string.split(",");
     for (let i = 0; i < array.length; i++) {
@@ -92,7 +89,6 @@ async function makeDecision() {
 }
 
 function clearVisualizations(node) {
-
     if (node !== root) {
         if (node.a) {
             node.a.style.backgroundColor = '';
@@ -102,10 +98,16 @@ function clearVisualizations(node) {
         }
     }
 
+
+    node.visited = false;
+
     for (let i = 0; i < node.children.length; i++) {
         clearVisualizations(node.children[i]);
     }
 }
+
+
+
 
 
 

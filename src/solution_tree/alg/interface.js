@@ -5,6 +5,8 @@ getFile2_button.addEventListener('click', chooseIndex1);
 getFile3_button.addEventListener('click', chooseIndex2);
 getFile_button.addEventListener('click', buildTreeFromFile);
 optimize_button.addEventListener('click', optimize);
+clearSolution_button.addEventListener('click',clearSolution);
+
 const FILE = document.getElementById('file_input');
 let flag = true;
 let root;
@@ -41,6 +43,19 @@ function createTree() {
 
     flag = true;
 }
+function clearSolution() {
+
+    clearVisualizations(root);
+
+    if (root.a) {
+        root.a.style.backgroundColor = '';
+    }
+    if (root.finalA) {
+        root.finalA.style.backgroundColor = '';
+    }
+}
+
+
 
 function buildTreeFromFile() {
     if(FILE.value === ''){
