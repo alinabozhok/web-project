@@ -48,6 +48,9 @@ function  buildTree(node){
 }
 
 async function makeDecision() {
+    // Clear previous visualizations
+    clearVisualizations(root);
+
     let string = document.getElementById('input_data').value;
     let array = string.split(",");
     for (let i = 0; i < array.length; i++) {
@@ -55,12 +58,12 @@ async function makeDecision() {
     }
     let currentNode = root;
     let counter = root.data[0].length;
-    while(currentNode !== undefined) {
-        if(!currentNode.visited){
+    while (currentNode !== undefined) {
+        if (!currentNode.visited) {
             currentNode.visited = true;
             await gradient('rgb(0, 128, 0)', currentNode);
             await sleep(100);
-            if(currentNode.finalA !== undefined){
+            if (currentNode.finalA !== undefined) {
                 await gradientForFinal('rgb(0, 128, 0)', currentNode.finalA);
                 await sleep(100);
             }
@@ -68,25 +71,43 @@ async function makeDecision() {
         if (doubleDecision(currentNode, array) !== -1) {
             currentNode = currentNode.children[doubleDecision(currentNode, array)];
         } else if (currentNode !== undefined) {
-            for(let j = 0; j < currentNode.children.length; j++) {
-                if(array.includes(currentNode.children[j].name) || currentNode.decisionMaker === root.data[0][root.data[0].length - 1] || currentNode.decisionMaker === root.data[0][root.data]) {
+            for (let j = 0; j < currentNode.children.length; j++) {
+                if (array.includes(currentNode.children[j].name) || currentNode.decisionMaker === root.data[0][root.data[0].length - 1] || currentNode.decisionMaker === root.data[0][root.data]) {
                     currentNode = currentNode.children[j];
                     break;
                 }
             }
         }
-        if (currentNode !== undefined && currentNode.name !== "root" && currentNode.parent.decisionMaker === root.data[0][root.data[0].length-1] && ! currentNode.visited)  {
+        if (currentNode !== undefined && currentNode.name !== "root" && currentNode.parent.decisionMaker === root.data[0][root.data[0].length - 1] && !currentNode.visited) {
             currentNode.visited = true;
             await gradient('rgb(0, 128, 0)', currentNode);
             break;
         }
         counter--;
-        if(counter < 0) {
+        if (counter < 0) {
             alert("Запрос не может быть распознан")
             break;
         }
     }
 }
+
+function clearVisualizations(node) {
+
+    if (node !== root) {
+        if (node.a) {
+            node.a.style.backgroundColor = '';
+        }
+        if (node.finalA) {
+            node.finalA.style.backgroundColor = '';
+        }
+    }
+
+    for (let i = 0; i < node.children.length; i++) {
+        clearVisualizations(node.children[i]);
+    }
+}
+
+
 
 async  function gradientForFinal(RGB, finalAnswer){
     finalAnswer.style.backgroundColor = RGB;
