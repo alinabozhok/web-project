@@ -3,7 +3,7 @@ reset_button.addEventListener('click', reset);
 getFile1_button.addEventListener('click', chooseIndex0);
 getFile2_button.addEventListener('click', chooseIndex1);
 getFile3_button.addEventListener('click', chooseIndex2);
-getFile_button.addEventListener('click', createTree);
+getFile_button.addEventListener('click', buildTreeFromFile);
 optimize_button.addEventListener('click', optimize);
 const FILE = document.getElementById('file_input');
 let flag = true;
@@ -13,9 +13,9 @@ document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
 let index = 0;
 
 function chooseIndex0() {
-    document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
-    index = 0;
-    createTree();
+        document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
+        index = 0;
+        createTree();
 }
 
 function chooseIndex1() {
@@ -36,10 +36,17 @@ let treeRoot = document.getElementById("root");
 
 function createTree() {
     rerenderTree();
-    if (FILE.value === '') {
-        startTreeBuilding(getData(index));
-        drawTree(root, treeRoot);
-    } else {
+    startTreeBuilding(getData(index));
+    drawTree(root, treeRoot);
+
+    flag = true;
+}
+
+function buildTreeFromFile() {
+    if(FILE.value === ''){
+        alert("Upload file please")
+    }else {
+        rerenderTree();
         let dataBase = FILE.files[0];
         let reader = new FileReader();
         reader.readAsText(dataBase);
@@ -48,12 +55,8 @@ function createTree() {
             startTreeBuilding(dataBase);
             drawTree(root, treeRoot);
         }
-
     }
-
-    flag = true;
 }
-
 function start() {
     if (flag) {
         makeDecision();
@@ -61,10 +64,13 @@ function start() {
 }
 
 function reset() {
-    treeRoot = rerenderTree(treeRoot);
+    rerenderTree();
+    root = document.createElement("ul");
+    root.setAttribute('id', 'root');
+    treeRoot.appendChild(root);
     FILE.value = '';
+    FILE.files = null;
 }
-
 
 function drawTree(currentNode, treeElement) {
     let li = document.createElement("li");
@@ -105,9 +111,9 @@ function optimize() {
 }
 
 
-// Объявим функцию scrollEvent за пределами rerenderTree
+
 function scrollEvent(event) {
-    // Блокируем стандартное поведение скроллинга
+    // блок стандартного скролла
     event.preventDefault();
 
     const delta = Math.sign(event.deltaY);
