@@ -98,18 +98,12 @@ function clearVisualizations(node) {
         }
     }
 
-
     node.visited = false;
 
     for (let i = 0; i < node.children.length; i++) {
         clearVisualizations(node.children[i]);
     }
 }
-
-
-
-
-
 
 async  function gradientForFinal(RGB, finalAnswer){
     finalAnswer.style.backgroundColor = RGB;

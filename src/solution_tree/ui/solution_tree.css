@@ -212,6 +212,7 @@ textarea {
 
 .tree::-webkit-scrollbar{
     width: 10px;
+    height: 10px;
 }
 .tree::-webkit-scrollbar-track{
     color: #808080;

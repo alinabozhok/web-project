@@ -5,7 +5,7 @@ getFile2_button.addEventListener('click', chooseIndex1);
 getFile3_button.addEventListener('click', chooseIndex2);
 getFile_button.addEventListener('click', buildTreeFromFile);
 optimize_button.addEventListener('click', optimize);
-clearSolution_button.addEventListener('click',clearSolution);
+
 
 const FILE = document.getElementById('file_input');
 let flag = true;
@@ -74,6 +74,7 @@ function buildTreeFromFile() {
 }
 function start() {
     if (flag) {
+        clearSolution();
         makeDecision();
     }
 }
@@ -163,7 +164,6 @@ function rerenderTree() {
     divTree.appendChild(root);
     treeRoot = root;
 }
-
 
 drawTree(root, treeRoot);
 
