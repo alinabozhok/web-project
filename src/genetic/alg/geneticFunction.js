@@ -57,94 +57,32 @@ export function childrenGeneration2(population) {
 
         let usedGens = [];
         let newChild = [];
-        let breakPoint = Math.floor(Math.random() * (firstParent.length - 3)) + 1;
+        let breakPoint = Math.floor(Math.random() * (firstParent.length - 2)) + 1;
 
         for(let k = 0; k < breakPoint; k++) {
-            let copy = {x: firstParent[k].x, y: firstParent[k].y};
-            newChild.push(copy);
-            usedGens.push(firstParent[k].x);
-            usedGens.push(firstParent[k].y);
+            newChild.push(firstParent[k]);
+            usedGens.push(firstParent[k].id);
         }
-        for(let d = 2; d < secondParent.length; d++) {
-            if (!usedGens.includes(secondParent[d].x) && !usedGens.includes(secondParent[d].y)) {
-                let copy = {x: secondParent[d].x, y: secondParent[d].y};
-                newChild.push(copy);
-                usedGens.push(secondParent[d].x);
-                usedGens.push(secondParent[d].y);
+        for(let d = breakPoint; d < secondParent.length; d++) {
+            if (!usedGens.includes(secondParent[d].id)) {
+                newChild.push(secondParent[d]);
+                usedGens.push(secondParent[d].id);
             }
         }
-        for(let f = breakPoint; f < firstParent.length; f++) {
-            if (newChild.length !== firstParent.length) {
-                if (!usedGens.includes(firstParent[f].x) && !usedGens.includes(firstParent[f].y)) {
-                    let copy = {x: firstParent[f].x, y: firstParent[f].y};
-                    newChild.push(copy);
-                    usedGens.push(firstParent[f].x);
-                    usedGens.push(firstParent[f].y);
+        if(newChild.length !== firstParent.length) {
+            for(let f = breakPoint; f < firstParent.length; f++) {
+                if (!usedGens.includes(firstParent[f].id)) {
+                    newChild.push(firstParent[f]);
+                    usedGens.push(firstParent[f].id);
                 }
             }
         }
         newChild = mutation(newChild);
         population.push({path: newChild, lengthPath: pathCalculation(newChild)});
     }
+
     return population;
 }
-
-// export function childrenGeneration(population) {
-//     let i = Math.floor(Math.random() * population.length);
-//     let j = i;
-//     while (i === j) {
-//         j = Math.floor(Math.random() * population.length);
-//     }
-//
-//     let firstParent = [...(population[i]).path];
-//     let secondParent = [...(population[j]).path];
-//
-//     let firstChild = [];
-//
-//     for(let k = 0; k < 2; k++) {
-//         let copy = {x: firstParent[k].x, y: firstParent[k].y};
-//         firstChild.push(copy);
-//         for(let s  = 0; s < secondParent.length; s++) {
-//             if(equal.default(secondParent[s], firstParent[k])) {
-//                 secondParent[s] = -1;
-//                 firstParent[k] = -1;
-//             }
-//         }
-//     }
-//     for(let d = 2; d < secondParent.length; d++) {
-//         if (secondParent[d] !== -1) {
-//             let copy = {x: secondParent[d].x, y: secondParent[d].y};
-//             firstChild.push(copy);
-//             for(let s  = 0; s < firstParent.length; s++) {
-//                 if(equal.default(secondParent[d], firstParent[s])) {
-//                     secondParent[d] = -1;
-//                     firstParent[s] = -1;
-//                 }
-//             }
-//         }
-//     }
-//
-//     for(let f = 2; f < firstParent.length; f++) {
-//         if (firstChild.length !== firstParent.length) {
-//             if (firstParent[f] !== -1) {
-//                 let copy = {x: firstParent[f].x, y: firstParent[f].y};
-//                 firstChild.push(copy);
-//                 firstParent[f] = -1;
-//                 for(let s  = 0; s < secondParent.length; s++) {
-//                     if(equal.default(secondParent[s], firstParent[f])) {
-//                         secondParent[s] = -1;
-//                         firstParent[f] = -1;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     firstChild = mutation(firstChild);
-//
-//     population.push({path: firstChild, lengthPath: pathCalculation(firstChild)});
-//
-//     return population;
-// }
 
 export function populationSort(population) {
     population.sort((a, b) => a.lengthPath - b.lengthPath);
@@ -154,7 +92,7 @@ export function populationSort(population) {
 export async function geneticFunction(points, callback) {
     const populationSize = inputPopulation.value;
     let population = populationGeneration(points);
-    for(let i = 0; i < 700; i++) {
+    for(let i = 0; i < 2000; i++) {
         population = [...childrenGeneration2([...population])];
         population = populationSort([...population]);
         while(population.length > populationSize) {

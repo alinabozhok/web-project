@@ -2,8 +2,7 @@ import drawMashIntoCanvas from "../../shared/ui/drawMashIntoCanvas.js";
 import {BackStack} from "../../shared/actionBackStack.js";
 import drawPoint from "../../shared/ui/drawPoint.js";
 import {geneticFunction} from "./geneticFunction.js";
-import {runTests} from "./testGenetic.js";
-
+import { v4 as uuidv4 } from 'uuid';
 
 const pointRadius = 10;
 const mashSize = 60;
@@ -17,6 +16,7 @@ const containerLengths = document.querySelector("#lengthEdges")
 const ctx = canvas.getContext('2d');
 
 const backStackApi = new BackStack();
+// let points = localStorage.getItem("points") ? JSON.parse(localStorage.getItem("points")) : [];
 let points = [];
 let currentPathStack = [];
 let isPending = false;
@@ -78,8 +78,9 @@ canvas.addEventListener('click',(e) => {
     const x = e.x - canvasBounds.x - pointRadius/2;
     const y = e.y - canvasBounds.y - pointRadius/2;
     backStackApi.pushAction("add_point", [...points]);
-    points.push({ x: x, y: y });
+    points.push({id: uuidv4(), x: x, y: y });
     render()
+    //localStorage.setItem("points", JSON.stringify(points))
     isPending = false;
 });
 
@@ -88,7 +89,6 @@ const delay = (delayInms) => {
 };
 
 document.querySelector("#start").addEventListener("click", () => {
-    runTests();
     if(isPending) return;
     geneticFunction(points, (path)=> {
         currentPathStack.push([...path.path.map(it => ({...it})), {...path.path[0]}])
