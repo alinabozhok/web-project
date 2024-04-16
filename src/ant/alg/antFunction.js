@@ -1,8 +1,9 @@
-const alpha = 5;
-const beta = 5;
-const constForPath = 700;
+const alpha = 2;
+const beta = 10;
+const constForPath = 2000;
 const constForPheromones = 700;
-const evaporation = 0.9;
+const evaporation = 0.8;
+const inputCountAnts = document.querySelector('#countAnts');
 
 export function creationPathMatrix(points) {
     let pathMatrix = [];
@@ -12,7 +13,7 @@ export function creationPathMatrix(points) {
             let lengthPath = Math.round(Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y));
             if(lengthPath !== 0){
                 let closeness = constForPath/lengthPath;
-                pathMatrix[i][j] = {lengthPath: lengthPath, pheromones: 0.2, closeness: closeness};
+                pathMatrix[i][j] = {lengthPath: lengthPath, pheromones: 0.4, closeness: closeness};
             }
             else pathMatrix[i][j] = 0;
         }
@@ -21,11 +22,11 @@ export function creationPathMatrix(points) {
 }
 
 
-export function probabilityCalculation(path) {
+export function probabilityCalculation(path, visited) {
     let wishArray = [];
     let probability = [];
     for(let i = 0; i < path.length; i++) {
-        if(path[i] !== 0) {
+        if(path[i] !== 0 && !visited.includes(i)) {
             wishArray[i] = Math.pow(path[i].pheromones, alpha) * Math.pow(path[i].closeness, beta);
         }
         else wishArray[i] = 0;
@@ -46,71 +47,69 @@ export function vertexSelection(probability, visited) {
     let count = 0;
     for(let i = 0; i < probability.length; i++) {
         if(!visited.includes(i)){
-            count = Math.round(probability[i]*10000000)
+            count = Math.round(probability[i]*1000)
             for(let j = 0; j < count; j++) {
                 range.push(i);
             }
         }
     }
-    let randomNumber = Math.round(range.length*(Math.floor(Math.random() * (1))));
+    let randomNumber = Math.round((Math.floor(Math.random() * 998)));
     return range[randomNumber];
 }
 export function antsRun(points, pathMatrix) {
     let pathAnts = [];
     for(let i = 0; i < points.length; i++) {
         let visited = [];
-        let currentPath = probabilityCalculation(pathMatrix[i]);
         visited.push(i);
+        let currentPath = probabilityCalculation(pathMatrix[i], visited);
         while(visited.length < points.length) {
             let vertex = vertexSelection(currentPath, visited);
             if(!visited.includes(vertex)){
-                pathMatrix[i][vertex].pheromones = redistributionOfPheromones(pathMatrix[i][vertex]);
-                currentPath = probabilityCalculation(pathMatrix[vertex]);
                 visited.push(vertex);
+                if(visited.length < points.length) {
+                    currentPath = probabilityCalculation(pathMatrix[vertex], visited);
+                }
             }
         }
+        visited.push(i);
+        redistributionOfPheromones(visited, pathMatrix);
         pathAnts.push({visited: visited, visitedLength: pathCalculation(visited, points)});
 
     }
     return pathAnts;
 }
 
-function redistributionOfPheromones(element) {
-    if(element.lengthPath !== 0) {
-        return element.pheromones * evaporation + constForPheromones/element.lengthPath;
+function redistributionOfPheromones(visited, pathMatrix) {
+    for(let i = 0; i < visited.length - 2; i++) {
+        pathMatrix[visited[i]][visited[i+1]].pheromones
+            = pathMatrix[visited[i]][visited[i+1]].pheromones * evaporation + constForPheromones
+                /pathMatrix[visited[i]][visited[i+1]].lengthPath;
     }
-    return 0;
 }
 
 function pathSort(pathAnts) {
-    pathAnts.sort((a, b) => a.lengthPath - b.lengthPath);
+    pathAnts.sort((a, b) => a.visitedLength - b.visitedLength);
     return pathAnts;
 }
 function pathCalculation(path, points) {
     let length = 0;
-    for(let i = 0; i < path.length; i++) {
-        for(let j = i + 1; j < path.length; j++) {
-            length += Math.round(Math.hypot(points[path[i]].x - points[path[j]].x, points[i].y - points[j].y));
-        }
+    for(let i = 0; i < path.length - 1; i++) {
+        length += Math.round(Math.hypot(points[path[i]].x - points[path[i + 1]].x, points[path[i]].y - points[path[i + 1]].y));
     }
     return length;
 }
 export function antFunction(points) {
+    const countAnts = inputCountAnts.value;
     let k = 0;
-    let shortPath = 0;
+    let shortPath = Number.MAX_VALUE;
     let answerPath = [];
     let pathMatrix = creationPathMatrix(points);
-    while (k < 5) {
+    for(let i = 0; i < countAnts; i++) {
         let pathAnts = antsRun(points, pathMatrix);
         pathAnts = pathSort([...pathAnts]);
-        if(shortPath === pathAnts[0].visitedLength) {
-            k += 1;
-            answerPath = pathAnts[0];
-            console.log("# pathAnts: ", pathAnts[0]);
-        }
-        else {
-            shortPath = pathAnts[0].visitedLength;
-            k = 0;
+        if(pathAnts[0].visitedLength < shortPath) {
+            shortPath = pathAnts.visitedLength;
+            answerPath = pathAnts[0].visited;
         }
     }
     return answerPath;

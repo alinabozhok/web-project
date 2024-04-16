@@ -33,11 +33,11 @@ function render() {
             ctx.closePath();
         }
     }
-    if(result.visited && result.visited.length > 0) {
-        for(let d = 0; d < result.visited.length - 1; d++) {
+    if(result && result.length > 0) {
+        for(let d = 0; d < result.length - 1; d++) {
             ctx.beginPath();
-            ctx.moveTo(points[result.visited[d]].x, points[result.visited[d]].y);
-            ctx.lineTo(points[result.visited[d + 1]].x, points[result.visited[d + 1]].y);
+            ctx.moveTo(points[result[d]].x, points[result[d]].y);
+            ctx.lineTo(points[result[d + 1]].x, points[result[d + 1]].y);
             ctx.strokeStyle = "red";
             ctx.lineWidth = 5;
             ctx.stroke();
@@ -66,9 +66,7 @@ canvas.addEventListener('click',(e) => {
     isPending = false;
 });
 document.getElementById("start").addEventListener("click", () => {
-    console.log("Before ant alg");
     result = antFunction(points);
-    console.log("Answer:", result);
     render()
 });
 
