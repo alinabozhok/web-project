@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A* algorithm</title>
+    <link rel="stylesheet" href="src/astar/ui/ui.css">
+    <script src="src/astar/ui/ui.js"></script>
+</head>
+<body>
+<div class="hamburger-menu">
+    <input id="menu__toggle" type="checkbox" />
+    <label class="menu__btn" for="menu__toggle">
+        <span></span>
+    </label>
+
+    <ul class="menu__box">
+        <li><a class="menu__item" href="index.html">MAIN PAGE</a></li>
+        <li><a class="menu__item" href="#">DECISION TREE</a></li>
+        <li><a class="menu__item" href="#">A* ALGORITHM</a></li>
+        <li><a class="menu__item" href="#">GENETIC ALGORITHM</a></li>
+        <li><a class="menu__item" href="#">ANT ALGORITHM</a></li>
+    </ul>
+</div>
+
+<header>
+    <h1>A* ALGORITHM VISUALIZER</h1>
+</header>
+
+<div class="info">
+    <p id="info-title">
+        TO START PATHFINDING:
+    </p>
+    <ol>
+        <li>SET <span class="start">START</span> & <span class="finish">FINISH</span> WITH «SHIFT» PRESSED</li>
+        <li>PLACE WALLS BY LEFT-CLICKING ON CELLS</li>
+        <li>YOU CAN ALSO GENERATE MAZE BY PRESSING «GENERATE MAZE» BUTTON</li>
+        <li>PRESS «FIND PATH» BUTTON</li>
+    </ol>
+</div>
+
+<div class="grid-container">
+    <div class="slide-container">
+        <input type="range" min="5" max="100" value="25" class="slider" id="grid-size">
+        <h2>GRID SIZE: <span id="size-value"></span> </h2>
+    </div>
+    <div class="slide-container">
+        <input type="range" min="10" max="1000" value="100" class="slider" id="animation-speed">
+        <h2>ANIMATION SPEED: <span id="speed-value"></span>%</h2>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let sliderSize = document.getElementById("grid-size");
+            let outputSize = document.getElementById("size-value");
+            outputSize.innerHTML = sliderSize.value;
+
+            sliderSize.oninput = function() {
+                outputSize.innerHTML = this.value;
+            }
+
+            let sliderSpeed = document.getElementById("animation-speed");
+            let outputSpeed = document.getElementById("speed-value");
+            outputSpeed.innerHTML = sliderSpeed.value;
+
+            sliderSpeed.oninput = function() {
+                outputSpeed.innerHTML = this.value;
+            }
+        });
+    </script>
+
+
+    <canvas id="grid-canvas"></canvas>
+
+    <div class="button-container">
+        <button id="set-new-cells">SET START & FINISH</button>
+
+        <button id="clear-board">CLEAR BOARD</button>
+
+        <button id="generate-maze-button">GENERATE MAZE</button>
+
+        <button id="run-button">FIND PATH</button>
+    </div>
+
+</div>
+
+</body>
+</html>

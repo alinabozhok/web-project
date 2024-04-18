@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<meta lang = "en">
+<meta charset="UTF-8"/>
+</html>
+<head>
+    <title>Solution Tree</title>
+    <link rel="stylesheet" href="decision_tree.css">
+
+</head>
+
+<body>
+<h1>Solution Tree</h1>
+
+
+<div class="wrapper" id="wrapper">
+    <div class="toolbar">
+        <div class="build-tree">
+            <div class="button-section"><b>To build a tree:</b></div>
+            <button id="getFile1_button">To build a tree 1</button>
+            <button id="getFile2_button"> To build a tree 2</button>
+            <button id="getFile3_button"> To build a tree 3</button>
+            <button id="getFile_button">To build your own tree</button>
+        </div>
+
+        <div class="work-tree">
+            <div class="button-section"><b>Tools with tree:</b></div>
+            <button id="start_button">Start crawl</button>
+            <button id="reset_button">Clear all</button>
+            <button id="optimize_button">Optimize</button>
+            <button id="clearPath_button">Clear Path</button>
+            <input id="file_input" type="file">
+            <label class="label" for='file_input'>Upload file with training sample</label>
+        </div>
+
+        <div class="textbox">
+            <div class="button-section"><b>Your request:</b></div>
+            <textarea id="input_data" name="input_data" cols="40" rows="5"></textarea></p>
+        </div>
+
+
+
+    </div>
+    <div class="canvas">
+        <div class="tree" id="tree">
+            <ul id="root">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script src="../alg/receiveData.js"></script>
+<script src="../alg/data.js"></script>
+<script src="../alg/decision_tree.js"></script>
+
+<script src="../alg/interface.js"></script>
+
+</body>

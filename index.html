@@ -1,16 +1,61 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <a href="src/cluster/ui/cluster.html">
-    <button ></button>
-    </a>
-    <script type="module" src="/src/main.js"></script>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Web Project</title>
 
-  </body>
+    <link rel="stylesheet" href="src/style.css">
+
+    <script src="src/main.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1 class="main-title">WEB PROJECT</h1>
+</header>
+
+<div class="main-section">
+    <div class="algorithm-item-up">
+        <div class="algorithm-item">
+            <a href="src/neural/index.html"><h2 class="algorithm-text">neural network</h2>
+            <img src="src/assets/neural-network-icon.svg" alt="" class="algorithm-icon">
+            <img src="src/assets/brown-info.svg" alt="" class="algorithm-icon-invisible"></a>
+        </div>
+        <div class="algorithm-item">
+            <a href="tree.html"><h2 class="algorithm-text">decision tree</h2>
+            <img src="src/assets/decimal-tree-icon.svg" alt="" class="algorithm-icon">
+            <img src="src/assets/darkgreen-info.svg" alt="" class="algorithm-icon-invisible"></a>
+        </div>
+        <div class="algorithm-item">
+            <a href="astar.html"><h2 class="algorithm-text">a* algorithm</h2>
+            <img src="src/assets/astar-icon.svg" alt="" class="algorithm-icon">
+            <img src="src/assets/lightgreen-info.svg" alt="" class="algorithm-icon-invisible"></a>
+        </div>
+    </div>
+    <div class="algorithm-item-down">
+        <div class="algorithm-item">
+            <a href="genetic.html"><h2 class="algorithm-text">genetic</h2>
+            <img src="src/assets/genetic-icon.svg" alt="" class="algorithm-icon">
+            <img src="src/assets/darkgreen-info.svg" alt="" class="algorithm-icon-invisible"></a>
+        </div>
+        <div class="algorithm-item">
+            <a href="clustering.html"><h2 class="algorithm-text">clustering</h2>
+            <img src="src/assets/clustering-icon.svg" alt="" class="algorithm-icon">
+            <img src="src/assets/lightgreen-info.svg" alt="" class="algorithm-icon-invisible"></a>
+        </div>
+        <div class="algorithm-item">
+            <a href="ant.html"><h2 class="algorithm-text">ant algorithm</h2>
+            <img src="src/assets/ant-icon.svg" alt="" class="algorithm-icon">
+                <img src="src/assets/brown-info.svg" alt="" class="algorithm-icon-invisible"></a>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>
