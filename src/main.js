@@ -1,15 +1,39 @@
-import './style.css'
-import {drawIntoCanvas} from "./shared/ui/drawIntoCanvas.js";
-import * as equal from "fast-deep-equal"
-console.log(equal);
+gsap.registerPlugin(TextPlugin)
 
-// document.querySelector('#app').innerHTML = `
-//   <div>
-//     <canvas id="canvas" width="500" height="500" style="background-color: #535bf2;"/>
-//   </div>
-// `
+document.addEventListener('DOMContentLoaded', function() {
+    const icons = document.querySelectorAll('.algorithm-icon');
+    const invisibleIcons = document.querySelectorAll('.algorithm-icon-invisible');
 
-// const canvas = document.querySelector('#canvas');
+    icons.forEach(function(icon, index) {
+        icon.addEventListener('mouseenter', function() {
+            invisibleIcons[index].style.left = '105%';
+            invisibleIcons[index].style.opacity = '1';
+        });
 
-// drawIntoCanvas(100, 300, 50, 75, canvas.getContext('2d'));
+        invisibleIcons[index].addEventListener('mouseenter', function() {
+            invisibleIcons[index].style.left = '105%';
+            invisibleIcons[index].style.opacity = '1';
+        });
+
+        icon.addEventListener('mouseleave', function() {
+            invisibleIcons[index].style.left = '0';
+            invisibleIcons[index].style.opacity = '0';
+        });
+
+        invisibleIcons[index].addEventListener('mouseleave', function() {
+            invisibleIcons[index].style.left = '0';
+            invisibleIcons[index].style.opacity = '0';
+        });
+    });
+});
+
+gsap.to('.main-title', {
+    duration: 4,
+    text: "devs: Bogdan T. Alina B. Stanislav B.",
+    delay: 4,
+    repeat: -1,
+    yoyo: true,
+    repeatDelay: 2,
+});
+
 

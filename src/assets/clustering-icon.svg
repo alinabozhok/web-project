@@ -1,0 +1,22 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="200" height="200" rx="42" fill="#919970"/>
+<g clip-path="url(#clip0_82_60)">
+<path d="M32.797 95.9519L32.7485 28.3271L94.1029 23.8485L120.137 77.7341L87.8937 116.491L32.797 95.9519Z" stroke="#4F5730" stroke-width="4.28972" stroke-linejoin="round"/>
+<ellipse cx="94.1028" cy="23.8484" rx="10.1881" ry="10.1881" transform="rotate(10.4669 94.1028 23.8484)" fill="#656D46"/>
+<ellipse cx="87.8938" cy="116.491" rx="10.1881" ry="10.1881" transform="rotate(10.4669 87.8938 116.491)" fill="#656D46"/>
+<ellipse cx="34.1439" cy="94.5648" rx="10.1881" ry="10.1881" transform="rotate(10.4669 34.1439 94.5648)" fill="#656D46"/>
+<ellipse cx="120.332" cy="76.6795" rx="10.1881" ry="10.1881" transform="rotate(10.4669 120.332 76.6795)" fill="#656D46"/>
+<ellipse cx="32.9836" cy="30.0064" rx="10.1881" ry="10.1881" transform="rotate(10.4669 32.9836 30.0064)" fill="#656D46"/>
+<path d="M123.381 107.921L177.288 112.476L176.691 161.686L131.969 178.778L103.266 150.444L123.381 107.921Z" stroke="#7A6664" stroke-width="3.43178" stroke-linejoin="round"/>
+<ellipse cx="176.691" cy="161.686" rx="8.15047" ry="8.15047" transform="rotate(105.338 176.691 161.686)" fill="#6A5555"/>
+<ellipse cx="103.266" cy="150.444" rx="8.15047" ry="8.15047" transform="rotate(105.338 103.266 150.444)" fill="#6A5555"/>
+<ellipse cx="124.395" cy="109.089" rx="8.15047" ry="8.15047" transform="rotate(105.338 124.395 109.089)" fill="#6A5555"/>
+<ellipse cx="132.797" cy="179.005" rx="8.15047" ry="8.15047" transform="rotate(105.338 132.797 179.005)" fill="#6A5555"/>
+<ellipse cx="175.934" cy="112.549" rx="8.15047" ry="8.15047" transform="rotate(105.338 175.934 112.549)" fill="#6A5555"/>
+</g>
+<defs>
+<clipPath id="clip0_82_60">
+<rect width="178.5" height="178.5" fill="white" transform="translate(10.75 10.75)"/>
+</clipPath>
+</defs>
+</svg>
