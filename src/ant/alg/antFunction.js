@@ -1,5 +1,5 @@
 const alpha = 2;
-const beta = 10;
+const beta = 25;
 const constForPath = 2000;
 const constForPheromones = 700;
 const evaporation = 0.8;
@@ -47,13 +47,13 @@ export function vertexSelection(probability, visited) {
     let count = 0;
     for(let i = 0; i < probability.length; i++) {
         if(!visited.includes(i)){
-            count = Math.round(probability[i]*1000)
+            count = Math.round(probability[i]*1000);
             for(let j = 0; j < count; j++) {
                 range.push(i);
             }
         }
     }
-    let randomNumber = Math.round((Math.floor(Math.random() * 998)));
+    let randomNumber = Math.round((Math.floor(Math.random() * range.length)));
     return range[randomNumber];
 }
 export function antsRun(points, pathMatrix) {
@@ -72,7 +72,7 @@ export function antsRun(points, pathMatrix) {
             }
         }
         visited.push(i);
-        redistributionOfPheromones(visited, pathMatrix);
+        redistributionOfPheromones(visited, pathMatrix); // сделать обновление после одной итерации
         pathAnts.push({visited: visited, visitedLength: pathCalculation(visited, points)});
 
     }
@@ -80,7 +80,7 @@ export function antsRun(points, pathMatrix) {
 }
 
 function redistributionOfPheromones(visited, pathMatrix) {
-    for(let i = 0; i < visited.length - 2; i++) {
+    for(let i = 0; i < visited.length - 1; i++) {
         pathMatrix[visited[i]][visited[i+1]].pheromones
             = pathMatrix[visited[i]][visited[i+1]].pheromones * evaporation + constForPheromones
                 /pathMatrix[visited[i]][visited[i+1]].lengthPath;
@@ -101,14 +101,14 @@ function pathCalculation(path, points) {
 export function antFunction(points) {
     const countAnts = inputCountAnts.value;
     let k = 0;
-    let shortPath = Number.MAX_VALUE;
+    let shortPath = 100000000000;
     let answerPath = [];
     let pathMatrix = creationPathMatrix(points);
     for(let i = 0; i < countAnts; i++) {
         let pathAnts = antsRun(points, pathMatrix);
         pathAnts = pathSort([...pathAnts]);
-        if(pathAnts[0].visitedLength < shortPath) {
-            shortPath = pathAnts.visitedLength;
+        if(pathAnts[0].visitedLength < shortPath || pathAnts[0].visitedLength === shortPath) {
+            shortPath = pathAnts[0].visitedLength;
             answerPath = pathAnts[0].visited;
         }
     }

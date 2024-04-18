@@ -28,7 +28,7 @@ function render() {
             ctx.beginPath();
             ctx.moveTo(points[k].x, points[k].y);
             ctx.lineTo(points[j].x, points[j].y);
-            ctx.strokeStyle = "#90989B";
+            ctx.strokeStyle = "#D3D9DC";
             ctx.stroke();
             ctx.closePath();
         }
@@ -50,6 +50,7 @@ function render() {
 document.addEventListener('keyup', (e) => {
     if((e.ctrlKey && e.key === "z") || (e.ctrlKey && e.key === "я")) {
         points = [...backStackApi.popAction().snapshot];
+        result = {visited: []}
         currentPathStack = [];
         isPending = true
         render()

@@ -36,7 +36,7 @@ function render() {
             ctx.beginPath();
             ctx.moveTo(points[k].x, points[k].y);
             ctx.lineTo(points[j].x, points[j].y);
-            ctx.strokeStyle = "#90989B";
+            ctx.strokeStyle = "#D3D9DC";
             ctx.stroke();
             ctx.closePath();
 

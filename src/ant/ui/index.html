@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Ant algorithm</title>
     <script src="./../alg/algs.js" type="module"></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div style="height: 48px">
-        <h1 style="margin: 0"> Ant algorithm</h1>
-        <div style="display: flex; gap: 16px; height: calc(100% - 64px)">
-            <div style="display: flex; flex-direction: column; gap: 16px;">
-                <canvas id="myCanvas" width="1200" height="650" style="border:7px solid #000000;"></canvas>
+    <div style="padding: 32px">
+        <h1 class="title"> Ant algorithm</h1>
+        <div style="display: flex; gap: 300px; height: 100%">
+            <div id="canvasCover">
+                <canvas id="myCanvas" width="1300" height="650"></canvas>
                 <button id="start">start</button>
                 <label>
-                    <input id="countAnts" type="text" placeholder="Enter the number of ants" style="height: 50px">
+                    <input id="countAnts" type="text" placeholder="Enter the number of ants runs" style="height: 50px">
                 </label>
             </div>
         </div>

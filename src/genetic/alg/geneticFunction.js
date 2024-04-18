@@ -1,5 +1,3 @@
-//import * as equal from "fast-deep-equal"
-
 const inputPopulation = document.querySelector('#countPopulation');
 const inputPercentageMutation = document.querySelector('#mutationPercentage');
 
