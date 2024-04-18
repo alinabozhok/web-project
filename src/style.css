@@ -48,7 +48,6 @@ body {
   align-items: center;
   margin-left: calc(var(--index) * 5.1);
 }
-
 .algorithm-text {
   color: var(--color-text);
   font-size: 3rem;

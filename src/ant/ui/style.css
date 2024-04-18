@@ -1,0 +1,21 @@
+body {
+    background-color: #BDAB94;
+}
+
+canvas {
+    border: 8px solid #8A715D;
+    border-radius: 20px;
+    background-color: #EEE7DB;
+}
+#canvasCover{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.title{
+    margin: 0;
+    text-align: center;
+}
