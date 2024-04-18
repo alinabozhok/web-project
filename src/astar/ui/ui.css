@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: jomhuria-web;
+    src: url("Jomhuria-Regular.woff2");
+}
+
+header {
+    margin-right: 124vh;
+    margin-top: 2vh;
+    position: absolute;
+}
+
+h1 {
+    font-family: jomhuria-web;
+    color: #441f0b;
+    font-size: 70px;
+    letter-spacing: 3px;
+}
+
+h2 {
+    font-family: jomhuria-web;
+    color: #441f0b;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+body {
+    font-family: jomhuria-web;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #E0DBD0;
+}
+
+canvas {
+    background-color: #e7e9e9;
+    border: 3px solid black;
+    margin-top: 20px;
+}
+
+.grid-container {
+    margin-left: 800px;
+    margin-top: 20px;
+}
+
+.slide-container {
+    display: contents;
+    width: 700px;
+    margin-top: 10vh;
+    margin-left: 27vh;
+    text-align: center;
+}
+
+.info {
+    font-size: 32px;
+    position: absolute;
+    margin-top: 130px;
+    margin-right: 1250px;
+    #info-title {
+        font-size: 70px;
+        margin-left: -20px;
+    }
+    .start {
+        color: #0ea20e;
+    }
+    .finish {
+        color: #cb1212;
+    }
+}
+
+
+#set-new-cells, #clear-board, #run-button, #generate-maze-button {
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    border: none;
+    padding: 0 26px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 7px;
+    background-color: #a27c64;
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+    box-shadow: 0 4px 14px 0 rgb(185, 161, 145);
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#set-new-cells:hover, #clear-board:hover, #run-button:hover, #generate-maze-button:hover {
+    background: rgb(183, 157, 133);
+    box-shadow: 0 6px 20px rgb(96, 73, 64);
+}
+
+
+
+
+    /*SLIDER*/
+
+.slider {
+    -webkit-appearance: none;
+    width: 700px;
+    height: 15px;
+    border-radius: 5px;
+    background: #c98345;
+    outline: none;
+    opacity: 0.6;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #9f5125;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #9f5125;
+    cursor: pointer;
+}
+
+    /*DISABLED UI*/
+.disabled {
+    filter: grayscale(75%);
+    pointer-events: none;
+}
+
+/*MENU*/
+#menu__toggle {
+    opacity: 0;
+}
+
+#menu__toggle:checked ~ .menu__btn > span {
+    transform: rotate(45deg);
+}
+#menu__toggle:checked ~ .menu__btn > span::before {
+    top: 0;
+    transform: rotate(0);
+}
+#menu__toggle:checked ~ .menu__btn > span::after {
+    top: 0;
+    transform: rotate(90deg);
+}
+#menu__toggle:checked ~ .menu__box {
+    visibility: visible;
+    left: 0;
+}
+
+.menu__btn {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+    width: 26px;
+    height: 26px;
+
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.menu__btn > span,
+.menu__btn > span::before,
+.menu__btn > span::after {
+    display: block;
+    position: absolute;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: #616161;
+
+    transition-duration: .25s;
+}
+.menu__btn > span::before {
+    content: '';
+    top: -8px;
+}
+.menu__btn > span::after {
+    content: '';
+    top: 8px;
+}
+
+.menu__box {
+    display: block;
+    position: fixed;
+    visibility: hidden;
+    top: 0;
+    left: -100%;
+
+    width: 300px;
+    height: 100%;
+
+    margin: 0;
+    padding: 80px 0;
+
+    list-style: none;
+
+    background-color: #ECEFF1;
+    box-shadow: 1px 0px 6px rgba(0, 0, 0, .2);
+
+    transition-duration: .25s;
+
+    z-index: 1000;
+}
+
+
+.menu__item {
+    display: block;
+    padding: 12px 24px;
+    margin-bottom: 50px;
+    color: #333;
+
+    font-family: jomhuria-web;
+    font-size: 40px;
+    letter-spacing: 3px;
+    font-weight: 400;
+
+    text-decoration: none;
+
+    transition-duration: .25s;
+}
+.menu__item:hover {
+    background-color: #CFD8DC;
+}

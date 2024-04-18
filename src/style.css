@@ -1,96 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --index: calc(1vw + 1vh);
+  --color-header: #624D4D;
+  --color-text: #6A5555;
+  --algorithms-gap: calc(var(--index) * 8)
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+@font-face {
+  font-family: jomhuria-web;
+  src: url("./assets/Jomhuria-Regular.woff2");
 }
-a:hover {
-  color: #535bf2;
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: jomhuria-web;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: #E0DBD0;
+  font-family: jomhuria-web;
+  overflow-x: hidden;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.main-title {
+  color: var(--color-header);
+  font-size: calc(var(--index) * 5.5);
+  letter-spacing: 0.5rem;
   text-align: center;
+  margin-bottom: calc(var(--index) * 0.5);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
+.algorithm-item {
+  max-width: calc(var(--index) * 100);
+  margin-left: calc(var(--index) * 4.5);
+  margin-right: calc(var(--index) * 4.5);
+  margin-bottom: calc(var(--index) * 4.5);
+  position: relative;
+  display: inline-block;
 }
 
-.card {
-  padding: 2em;
+.algorithm-item-up, .algorithm-item-down {
+  display: flex;
+  align-items: center;
+  margin-left: calc(var(--index) * 5.1);
+}
+.algorithm-text {
+  color: var(--color-text);
+  font-size: 3rem;
+  letter-spacing: 0.1rem;
+  text-align: center;
+  transition: color 0.5s ease;
 }
 
-.read-the-docs {
-  color: #888;
+.algorithm-icon-invisible {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  transition: left 1s ease, opacity 1s ease;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.algorithm-item:hover .algorithm-text {
+  color: #3b3737;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+a {
+  text-decoration: none;
 }
+
