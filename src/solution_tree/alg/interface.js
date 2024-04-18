@@ -126,8 +126,6 @@ function optimize() {
 
 }
 
-
-
 function scrollEvent(event) {
     // блок стандартного скролла
     event.preventDefault();
@@ -153,7 +151,29 @@ document.addEventListener("DOMContentLoaded", function() {
     treeDiv.appendChild(root);
 });
 
-// Функция перерисовки дерева
+document.getElementById('clearPath_button').addEventListener('click', clearPath);
+
+function clearPath() {
+    clearSolution();
+}
+
+function clearVisualizations(node) {
+
+    if (node !== root) {
+        if (node.a) {
+            node.a.style.backgroundColor = '';
+        }
+        if (node.finalA) {
+            node.finalA.style.backgroundColor = '';
+        }
+    }
+
+    for (let i = 0; i < node.children.length; i++) {
+        clearVisualizations(node.children[i]);
+    }
+}
+
+
 function rerenderTree() {
     let divTree = document.getElementById("tree");
     treeRoot.removeEventListener("wheel", scrollEvent);
