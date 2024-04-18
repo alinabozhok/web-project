@@ -1,20 +1,16 @@
-function receiveData(csvText, sep = ","){
-
-    let matrix = [];
-    let csvLines = csvText.split('\n');
-    let currRow;
-    for (let i = 0; i < csvLines.length - 1; i++) {
-
-        let line = csvLines[i].replace(/"/g, '');
-        let cells = line.split(sep);
-        currRow = [];
-        for (let j = 0; j < cells.length; j++) {
-            cells[j] = cells[j].trim();
-            if (cells[j].length === 0 || cells[j] === undefined) {
-                alert("Загрузите что-то....");
-                return;
-            }
-            currRow.push(cells[j]);
+export function receiveData(csvText, sep = ",") {
+    const matrix = [];
+    const csvLines = csvText.split(/\r?\n/);
+    for (let i = 0; i < csvLines.length; i++) {
+        const line = csvLines[i].trim();
+        if (line.length === 0) {
+            continue; // Пропускаем пустые строки
+        }
+        const cells = line.split(sep);
+        const currRow = cells.map(cell => cell.trim());
+        if (currRow.some(cell => cell.length === 0)) {
+            alert("Загрузите что-то....");
+            return;
         }
         matrix.push(currRow);
     }

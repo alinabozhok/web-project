@@ -1,4 +1,4 @@
-function getData(number) {
+export function getData(number) {
     let data = [];
     data[0] =  [
         ["Toothed", "Hair", "Breathes", "Legs", "species"],
@@ -27,25 +27,7 @@ function getData(number) {
         ["Выше",        "В гостях",     "На месте",     "Да",       "Нет"       ],
         ["Ниже",        "В гостях",     "На месте",     "Нет",      "Да"        ]
     ];
-    data[3] = [
-        ["usd",     "lamphat",  "nctt",     "slkt",     "play " ],
-        ["TANG",    "GIAM",     "THAP",     "TB",       "THAP " ],
-        ["TANG",    "TANG",     "THAP",     "TB",       "CAO "  ],
-        ["TANG",    "ON DINH",  "CAO",      "TB",       "CAO "  ],
-        ["TANG",    "TANG",     "THAP",     "THAP",     "CAO "  ],
-        ["TANG",    "GIAM",     "TB",       "THAP",     "CAO "  ],
-        ["TANG",    "GIAM",     "CAO",      "THAP",     "THAP " ],
-        ["TB",      "ON DINH",  "TB",       "CAO",      "THAP " ],
-        ["TB",      "GIAM",     "THAP",     "CAO",      "THAP " ],
-        ["TB",      "TANG",     "TB",       "THAP",     "THAP " ],
-        ["TB",      "ON DINH",  "CAO",      "TB",       "CAO "  ],
-        ["TB",      "GIAM",     "CAO",      "CAO",      "CAO "  ],
-        ["GIAM",    "ON DINH",  "CAO",      "THAP",     "THAP " ],
-        ["GIAM",    "GIAM",     "CAO",      "CAO",      "CAO "  ],
-        ["GIAM",    "TANG",     "CAO",      "TB",       "THAP " ],
-        ["GIAM",    "TANG",     "THAP",     "THAP",     "THAP " ],
-        ["GIAM",    "ON DINH",  "CAO",      "TB",       "CAO "  ]
-    ];
+
     data[2] = [
         ["Осадки",          "Температура",  "Влажность",    "Ветер",    "Класс"     ],
         ["Солнечно",        "Жарко",        "Высокая",      "Нет",      "Не играть" ],

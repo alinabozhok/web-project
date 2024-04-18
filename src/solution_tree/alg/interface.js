@@ -1,15 +1,25 @@
-start_button.addEventListener('click', start);
-reset_button.addEventListener('click', reset);
-getFile1_button.addEventListener('click', chooseIndex0);
-getFile2_button.addEventListener('click', chooseIndex1);
-getFile3_button.addEventListener('click', chooseIndex2);
-getFile_button.addEventListener('click', buildTreeFromFile);
-optimize_button.addEventListener('click', optimize);
+import {startTreeBuilding,clearVisualizations,makeDecision, TreeNode, root} from "./decision_tree.js";
+import{getData} from "./data.js";
+import{receiveData} from "./receiveData.js";
 
+const buttonHandlers = {
+    start_button: start,
+    reset_button: reset,
+    getFile1_button: chooseIndex0,
+    getFile2_button: chooseIndex1,
+    getFile3_button: chooseIndex2,
+    getFile_button: buildTreeFromFile,
+    optimize_button: optimize,
+    clearPath_button: clearPath
+};
+
+Object.keys(buttonHandlers).forEach(buttonId => {
+    document.getElementById(buttonId).addEventListener('click', buttonHandlers[buttonId]);
+});
 
 const FILE = document.getElementById('file_input');
 let flag = true;
-let root;
+
 
 document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
 let index = 0;
@@ -154,25 +164,8 @@ document.addEventListener("DOMContentLoaded", function() {
 document.getElementById('clearPath_button').addEventListener('click', clearPath);
 
 function clearPath() {
-    clearSolution();
+    clearVisualizations();
 }
-
-function clearVisualizations(node) {
-
-    if (node !== root) {
-        if (node.a) {
-            node.a.style.backgroundColor = '';
-        }
-        if (node.finalA) {
-            node.finalA.style.backgroundColor = '';
-        }
-    }
-
-    for (let i = 0; i < node.children.length; i++) {
-        clearVisualizations(node.children[i]);
-    }
-}
-
 
 function rerenderTree() {
     let divTree = document.getElementById("tree");

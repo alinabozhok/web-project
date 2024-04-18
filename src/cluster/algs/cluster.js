@@ -84,7 +84,7 @@ clusterButton.addEventListener('click', function() {
     const distanceFunction = getDistanceFunction(selectedDistance);
 
 
-    /*const hierarchicalClusters = hierarchicalClusterization(points, distanceFunction);
+   /* const hierarchicalClusters = hierarchicalClusterization(points, distanceFunction);
     const hierarchicalCentroids = hierarchicalClusters.map(cluster => calculateCentroid(cluster));
     drawClusters(hierarchicalClusters, hierarchicalCentroids);
 
@@ -163,39 +163,25 @@ function drawClusters(clusters, centroids) {
 function drawDBSCANClusters(clusters) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Create an array to store all points, including noise points
-    let allPoints = [];
-
-    // Collect all points from clusters
     clusters.forEach(cluster => {
-        allPoints = allPoints.concat(cluster);
-    });
+        cluster.forEach(point => {
+            if (point.isNoise) {
 
-    // Draw all points
-    allPoints.forEach(point => {
-        if (point.cluster === -1) {
-            // Draw cross for noise points
-            ctx.beginPath();
-            ctx.moveTo(point.x - 10, point.y - 10);
-            ctx.lineTo(point.x + 10, point.y + 10);
-            ctx.moveTo(point.x + 10, point.y - 10);
-            ctx.lineTo(point.x - 10, point.y + 10);
-            ctx.strokeStyle = 'red';
-            ctx.stroke();
-            ctx.closePath();
-        } else {
-            // Draw circle for normal points
-            const color = getRandomColor();
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.arc(point.x, point.y, 10, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.closePath();
-        }
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = 'black'; // или другой цвет
+                ctx.fill();
+                ctx.closePath();
+            } else {
+
+                const color = getRandomColor();
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 10, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath();
+            }
+        });
     });
 }
-
-
-
-
 
