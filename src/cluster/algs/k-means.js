@@ -1,12 +1,11 @@
-export function kMeansClustering(points, k) {
+export function kMeansClustering(points, k, distanceFunction) {
     let centroids = getRandomCentroids(points, k);
     let clusters = Array.from({ length: k }, () => []);
 
     while (true) {
-
         clusters = Array.from({ length: k }, () => []);
         points.forEach(point => {
-            const closestCentroidIndex = findClosestCentroidIndex(point, centroids);
+            const closestCentroidIndex = findClosestCentroidIndex(point, centroids, distanceFunction);
             clusters[closestCentroidIndex].push(point);
         });
 
@@ -15,7 +14,6 @@ export function kMeansClustering(points, k) {
             const centroid = calculateCentroid(cluster);
             newCentroids.push(centroid);
         });
-
 
         if (JSON.stringify(newCentroids) === JSON.stringify(centroids)) {
             break;
@@ -43,12 +41,12 @@ export function getRandomCentroids(points, k) {
     return centroids;
 }
 
-export function findClosestCentroidIndex(point, centroids) {
+export function findClosestCentroidIndex(point, centroids, distanceFunction) {
     let minDistance = Number.MAX_VALUE;
     let closestIndex = -1;
 
     centroids.forEach((centroid, index) => {
-        const distance = Math.sqrt(Math.pow(point.x - centroid.x, 2) + Math.pow(point.y - centroid.y, 2));
+        const distance = distanceFunction(point, centroid);
         if (distance < minDistance) {
             minDistance = distance;
             closestIndex = index;

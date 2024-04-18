@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: jomhuria-web;
     src: url("Jomhuria-Regular.woff2");
@@ -10,8 +9,6 @@ header {
     position: absolute;
 }
 
-
-
 body {
     font-family: jomhuria-web;
     overflow-x: hidden;
@@ -22,14 +19,17 @@ body {
     margin: 0;
     background-color: #E0DBD0;
 }
-#clusterCountCover{
+
+#clusterCountCover,
+#epsCover,
+#minPtsCover {
     font-family: jomhuria-web;
     color: #441f0b;
     font-size: 25px;
     letter-spacing: 1px;
     display: flex;
     text-align: left;
-    margin-right: 25%;
+    margin-right: 37%;
 }
 
 canvas {
@@ -37,7 +37,11 @@ canvas {
     border: 3px solid black;
     margin-top: 20px;
 }
-#clusterButton,#clearButton, #clusterCount{
+
+#clusterButton,
+#clearButton,
+#clusterCount,
+#distanceMeasure{
     display: inline-block;
     outline: 0;
     cursor: pointer;
@@ -48,6 +52,7 @@ canvas {
     border-radius: 7px;
     background-color: #a27c64;
     color: white;
+
     font-weight: 400;
     font-size: 16px;
     box-shadow: 0 4px 14px 0 rgb(185, 161, 145);
@@ -56,19 +61,39 @@ canvas {
     margin-left: 10px;
     margin-right: 10px;
 }
-#clusterButton:hover, #clearButton:hover{
+
+#clusterButton:hover,
+#clearButton:hover,
+#distanceMeasure:hover,
+#clusterCount:hover,
+#eps:hover,
+#minPts:hover {
     background: rgb(183, 157, 133);
     box-shadow: 0 6px 20px rgb(96, 73, 64);
 }
-#buttonsBlock{
+#dbscanParametersBlock input[type="range"]::-webkit-slider-runnable-track{
+    background-color: #a27c64;
+    color: white;
+    border-radius: 2px;
+
+}
+#dbscanParametersBlock input[type="range"]::-webkit-slider-thumb{
+    cursor: grab;
+}
+#epsValue,
+#minPtsValue{
+    font-size: 30px;
+}
+
+#buttonsBlock {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-
 #buttonsBlock input,
-#buttonsBlock button{
+#buttonsBlock button,
+#distanceMeasure {
     width: 100%;
     margin-bottom: 10px;
 }
