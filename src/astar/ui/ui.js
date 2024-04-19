@@ -456,6 +456,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Для четных лабиринтов
             if (parseInt(sizeInput.value) % 2 === 0) {
+                grid[parseInt(sizeInput.value) - 1][parseInt(sizeInput.value) - 1] = 0;
+                updateCell(parseInt(sizeInput.value) - 1, parseInt(sizeInput.value) - 1);
                 for (let i = 0; i < parseInt(sizeInput.value); i++) {
                     if (i === 0) {
                         grid[i][parseInt(sizeInput.value) - 1] = 0;

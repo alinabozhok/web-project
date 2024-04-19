@@ -122,7 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 let b2 = data.b2;
 
                 // Находим вероятности и выводим цифру с наибольшей вероятностью
-                let A2 = forward_prop(W1, b1, W2, b2, imageDataArray)
+                let A2 = forward_prop(W1, b1, W2, b2, imageDataArray);
+                console.log(A2);
                 let predictions = getPredictions(A2);
                 displayPredictions(predictions);
             })
