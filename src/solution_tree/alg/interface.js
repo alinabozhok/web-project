@@ -5,12 +5,9 @@ import{receiveData} from "./receiveData.js";
 const buttonHandlers = {
     start_button: start,
     reset_button: reset,
-    getFile1_button: chooseIndex0,
-    getFile2_button: chooseIndex1,
-    getFile3_button: chooseIndex2,
-    getFile_button: buildTreeFromFile,
-    optimize_button: optimize,
-    clearPath_button: clearPath
+    getData1: chooseSample0,
+    getData2: chooseSample1,
+    getData: buildTreeFromFile
 };
 
 Object.keys(buttonHandlers).forEach(buttonId => {
@@ -21,24 +18,18 @@ const FILE = document.getElementById('file_input');
 let flag = true;
 
 
-document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
+document.getElementById('input_data').value = "Выше,     Нет,    На месте";
 let index = 0;
 
-function chooseIndex0() {
-        document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
+function chooseSample0() {
+    document.getElementById('input_data').value = "Выше,     Нет,    На месте";
         index = 0;
         createTree();
 }
 
-function chooseIndex1() {
-    document.getElementById('input_data').value = "Выше,     Нет,    На месте";
+function chooseSample1() {
+    document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
     index = 1;
-    createTree();
-}
-
-function chooseIndex2() {
-    document.getElementById('input_data').value = "Солнечно, Жарко, Высокая";
-    index = 2;
     createTree();
 }
 
@@ -132,9 +123,6 @@ function drawTree(currentNode, treeElement) {
     }
 }
 
-function optimize() {
-
-}
 
 function scrollEvent(event) {
     // блок стандартного скролла
@@ -160,12 +148,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     treeDiv.appendChild(root);
 });
-
-document.getElementById('clearPath_button').addEventListener('click', clearPath);
-
-function clearPath() {
-    clearVisualizations();
-}
 
 function rerenderTree() {
     let divTree = document.getElementById("tree");

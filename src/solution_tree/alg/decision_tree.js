@@ -3,15 +3,16 @@ import {selectSplitParam} from "./selectSplitParam.js";
 export class TreeNode{
     constructor(data,name) {
         this.value;
-        this.valuePercentage = undefined;
-        this.children = [];
-        this.decider;
         this.data=data;
         this.name = name;
-        this.a;
-        this.parent;
         this.visited= false;
         this.isleaf = false;
+        this.children = [];
+        this.parent;
+        this.valuePercentage = undefined;
+        this.decisionMaker;
+        this.a;
+
     };
 
     isLeaf(){
@@ -80,7 +81,7 @@ export async function makeDecision() {
             await gradient('rgb(0, 128, 0)', currentNode);
             await sleep(100);
             if (currentNode.finalA !== undefined) {
-                await gradientForFinal('rgb(0, 128, 0)', currentNode.finalA);
+                await gradientForLast('rgb(0, 128, 0)', currentNode.finalA);
                 await sleep(100);
             }
         }
@@ -107,7 +108,6 @@ export async function makeDecision() {
             await gradient('rgb(0, 128, 0)', currentNode);
             break;
         }
-        console.log(currentNode);
         counter--;
         if (counter < 0) {
             alert("Запрос не может быть распознан");
@@ -134,7 +134,7 @@ export function clearVisualizations(node) {
     }
 }
 
-async  function gradientForFinal(RGB, finalAnswer){
+async  function gradientForLast(RGB, finalAnswer){
     finalAnswer.style.backgroundColor = RGB;
     await sleep(100);
 }

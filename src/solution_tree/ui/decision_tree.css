@@ -3,6 +3,12 @@
     src: url("Jomhuria-Regular.woff2");
 }
 
+h1 {
+    font-family: jomhuria-web;
+    color: #441f0b;
+    font-size: 50px;
+}
+
 body {
     font-family: jomhuria-web;
     overflow-x: hidden;
@@ -28,9 +34,10 @@ a, a:visited, a:hover {
 }
 
 .wrapper {
-    display:grid;
+    display:flex;
     grid-template-columns: 2fr 5fr;
     margin-top: 5px;
+
 }
 
 .toolbar {
@@ -40,7 +47,7 @@ a, a:visited, a:hover {
     align-items:center;
     margin-left: auto;
     margin-right: 20px;
-    background-color: #a27c64;
+
     border-radius: 10px;
     width: 323px;
 }
@@ -91,12 +98,13 @@ input{
 
 }
 
-.button-section {
+#button_block {
     margin-top: 10px;
     font-size: 35px
 }
 
-button, .labelWrapper {
+
+button, #labelCover {
     font-family: jomhuria-web;
     color: white;
     width: 260px;
@@ -190,16 +198,6 @@ button:active, label:active {
     display: inline-block;
     border-radius: 5px;
 
-}
-
-
-
-h1 {
-    font-family: jomhuria-web;
-    color: #441f0b;
-    font-size: 70px;
-    letter-spacing: 3px;
-    text-align: center;
 }
 
 textarea {
