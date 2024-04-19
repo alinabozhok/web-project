@@ -91,12 +91,12 @@ clusterButton.addEventListener('click', function() {
         case 'kMeans':
             const kMeansClusters = kMeansClustering(points, clusterCount, distanceFunction);
             const kMeansCentroid = kMeansClusters.map(cluster=>calculateCentroid(cluster));
-            drawClusters(kMeansClusters,kMeansCentroid);
+            drawKMeans(kMeansClusters,kMeansCentroid);
             break;
         case 'hierarchical':
-            const hierarchicalClusters = hierarchicalClusterization(points, distanceFunction);
-            const hierarchicalCentroid = hierarchicalClusters.map(cluster=>calculateCentroid(cluster));
-            drawClusters(hierarchicalClusters,hierarchicalCentroid);
+            const hierarchicalClusters = hierarchicalClusterization(points, clusterCount,distanceFunction);
+            console.log(hierarchicalClusters.length);
+            drawHierarchicalClusters(hierarchicalClusters);
             break;
         case 'dbscan':
             resetPointsProperties(points);
@@ -148,7 +148,7 @@ function getRandomColor() {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-function drawClusters(clusters, centroids) {
+function drawKMeans(clusters, centroids) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     clusters.forEach((cluster, index) => {
@@ -200,6 +200,21 @@ function drawDBSCANClusters(clusters, noisePoints) {
         }
     });
 }
+function drawHierarchicalClusters(clusters) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    clusters.forEach((cluster, index) => {
+        const color = getRandomColor();
+        cluster.forEach(point => {
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 10, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.closePath();
+        });
+    });
+}
+
 
 
 
