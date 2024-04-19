@@ -1,5 +1,5 @@
 import { clearCanvas } from "../../shared/ui/clearCanvas.js";
-import { kMeansClustering, getRandomCentroids,calculateCentroid } from "./k-means.js";
+import { kMeansClustering,calculateCentroid } from "./k-means.js";
 import {euclideanDistance,manhattanDistance,chebyshevDistance} from "./distances.js";
 import {hierarchicalClusterization} from "./hierarchial.js";
 import {dbscan} from "./dbscan.js";
@@ -13,11 +13,13 @@ const epsSlider = document.getElementById('eps');
 const epsValue = document.getElementById('epsValue');
 const minPtsSlider = document.getElementById('minPts');
 const minPtsValue = document.getElementById('minPtsValue');
+const clusteringMethodSelect = document.getElementById('clusteringMethod');
 
 let points = [];
 let clusterCount = parseInt(document.getElementById('clusterCount').value);
 let centroids = [];
 let isDrawing = false;
+
 document.addEventListener("DOMContentLoaded", function() {
     const distanceSelect = document.getElementById('distanceMeasure');
     distanceSelect.addEventListener('change', function() {
@@ -74,34 +76,46 @@ clearButton.addEventListener("click", function (){
 });
 
 clusterButton.addEventListener('click', function() {
-
-    if(clusterCount >= points.length) {
-        alert("K's more than points");
+    if (clusterCount >= points.length) {
+        alert("Number of clusters cannot exceed the number of points.");
         return;
     }
 
     const selectedDistance = distanceSelect.value;
     const distanceFunction = getDistanceFunction(selectedDistance);
 
-
-   /* const hierarchicalClusters = hierarchicalClusterization(points, distanceFunction);
-    const hierarchicalCentroids = hierarchicalClusters.map(cluster => calculateCentroid(cluster));
-    drawClusters(hierarchicalClusters, hierarchicalCentroids);
+    const selectedMethod = clusteringMethodSelect.value;
 
 
-    const kMeansClusters = kMeansClustering(points, clusterCount, distanceFunction);
-    const kMeansCentroids = kMeansClusters.map(cluster => calculateCentroid(cluster));
-    drawClusters(kMeansClusters, kMeansCentroids);*/
-
-
-    let visitedPoints = new Set();
-
-    const dbscanClusters = dbscan(points, parseFloat(epsSlider.value), parseInt(minPtsSlider.value), distanceFunction, visitedPoints);
-    console.log(dbscanClusters);
-    drawDBSCANClusters(dbscanClusters);
-
-
+    switch(selectedMethod) {
+        case 'kMeans':
+            const kMeansClusters = kMeansClustering(points, clusterCount, distanceFunction);
+            const kMeansCentroid = kMeansClusters.map(cluster=>calculateCentroid(cluster));
+            drawClusters(kMeansClusters,kMeansCentroid);
+            break;
+        case 'hierarchical':
+            const hierarchicalClusters = hierarchicalClusterization(points, distanceFunction);
+            const hierarchicalCentroid = hierarchicalClusters.map(cluster=>calculateCentroid(cluster));
+            drawClusters(hierarchicalClusters,hierarchicalCentroid);
+            break;
+        case 'dbscan':
+            resetPointsProperties(points);
+            const visitedPoints = new Set();
+            const dbscanClusters = dbscan(points, parseFloat(epsSlider.value), parseInt(minPtsSlider.value), distanceFunction, visitedPoints);
+            const noisePoints = points.filter(point=>point.isNoise);
+               drawDBSCANClusters(dbscanClusters, noisePoints);
+            break;
+        default:
+            alert("Invalid clustering method selected.");
+    }
 });
+
+function resetPointsProperties(points) {
+    points.forEach(point => {
+        delete point.isNoise;
+        delete point.cluster;
+    });
+}
 
 export function getDistanceFunction(selectedDistance) {
     switch (selectedDistance) {
@@ -160,28 +174,34 @@ function drawClusters(clusters, centroids) {
         ctx.closePath();
     });
 }
-function drawDBSCANClusters(clusters) {
+function drawDBSCANClusters(clusters, noisePoints) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+
+    noisePoints.forEach(point => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+        ctx.closePath();
+    });
+
+
     clusters.forEach(cluster => {
-        cluster.forEach(point => {
-            if (point.isNoise) {
-
-                ctx.beginPath();
-                ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-                ctx.fillStyle = 'black'; // или другой цвет
-                ctx.fill();
-                ctx.closePath();
-            } else {
-
-                const color = getRandomColor();
-                ctx.fillStyle = color;
+        if (cluster.length > 0) {
+            const color = getRandomColor();
+            cluster.forEach(point => {
                 ctx.beginPath();
                 ctx.arc(point.x, point.y, 10, 0, Math.PI * 2);
+                ctx.fillStyle = color;
                 ctx.fill();
                 ctx.closePath();
-            }
-        });
+            });
+        }
     });
 }
+
+
+
+
 

@@ -18,7 +18,13 @@
         <option value="chebyshev">Chebyshev Distance</option>
     </select>
     <button id="clusterButton">Cluster</button>
-    <button id="clearButton">Clear Canvas</button>
+    <button id="clearButton">Clear</button>
+    <select id="clusteringMethod">
+        <option value="kMeans">K-Means</option>
+        <option value="hierarchical">Hierarchical</option>
+        <option value="dbscan">DBSCAN</option>
+    </select>
+
 </div>
 <div id="dbscanParametersBlock">
     <label for="eps" id="epsCover">Radius:</label>
@@ -36,10 +42,10 @@
 
     <ul class="menu__box">
         <li><a class="menu__item" href="../../../index.html">MAIN PAGE</a></li>
-        <li><a class="menu__item" href="#">DECISION TREE</a></li>
-        <li><a class="menu__item" href="#">A* ALGORITHM</a></li>
-        <li><a class="menu__item" href="#">GENETIC ALGORITHM</a></li>
-        <li><a class="menu__item" href="#">ANT ALGORITHM</a></li>
+        <li><a class="menu__item" href="../../solution_tree/ui/decision_tree.html">DECISION TREE</a></li>
+        <li><a class="menu__item" href="../../astar/ui/index.html">A* ALGORITHM</a></li>
+        <li><a class="menu__item" href="../../genetic/ui/index.html">GENETIC ALGORITHM</a></li>
+        <li><a class="menu__item" href="../../ant/ui/index.html">ANT ALGORITHM</a></li>
     </ul>
 </div>
 </body>

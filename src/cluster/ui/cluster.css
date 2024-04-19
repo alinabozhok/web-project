@@ -22,14 +22,21 @@ body {
 
 #clusterCountCover,
 #epsCover,
-#minPtsCover {
+#minPtsCover,
+#clusteringMethodCover{
     font-family: jomhuria-web;
     color: #441f0b;
     font-size: 25px;
     letter-spacing: 1px;
     display: flex;
     text-align: left;
-    margin-right: 37%;
+    margin-right: 55%;
+}
+
+#labelWrapper{
+    display: flex;
+    width: 500px;
+    height: 500px;
 }
 
 canvas {
@@ -41,7 +48,8 @@ canvas {
 #clusterButton,
 #clearButton,
 #clusterCount,
-#distanceMeasure{
+#distanceMeasure,
+#clusteringMethod{
     display: inline-block;
     outline: 0;
     cursor: pointer;
@@ -67,10 +75,16 @@ canvas {
 #distanceMeasure:hover,
 #clusterCount:hover,
 #eps:hover,
-#minPts:hover {
+#minPts:hover ,
+#clusteringMethod:hover{
     background: rgb(183, 157, 133);
     box-shadow: 0 6px 20px rgb(96, 73, 64);
 }
+#dbscanParametersBlock{
+
+    width: 250px;
+}
+
 #dbscanParametersBlock input[type="range"]::-webkit-slider-runnable-track{
     background-color: #a27c64;
     color: white;
@@ -93,7 +107,8 @@ canvas {
 
 #buttonsBlock input,
 #buttonsBlock button,
-#distanceMeasure {
+#distanceMeasure,
+#clusteringMethod{
     width: 100%;
     margin-bottom: 10px;
 }
