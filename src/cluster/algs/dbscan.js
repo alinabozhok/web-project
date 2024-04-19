@@ -22,7 +22,7 @@ export function dbscan(points, eps, minPts, selectedDistance, visitedPoints){
     }
     return clusters;
 }
-export function expandCluster(points, point, neighbors, cluster, eps, minPts, visited,distanceFunction) {
+function expandCluster(points, point, neighbors, cluster, eps, minPts, visited,distanceFunction) {
     point.cluster = cluster;
     cluster.push(point);
 
@@ -43,6 +43,6 @@ export function expandCluster(points, point, neighbors, cluster, eps, minPts, vi
     }
 }
 
-export function regionQuery(points,point,eps,distanceFunction){
+function regionQuery(points,point,eps,distanceFunction){
     return points.filter(p=>distanceFunction(point, p)<eps);
 }

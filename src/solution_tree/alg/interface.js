@@ -1,34 +1,35 @@
-start_button.addEventListener('click', start);
-reset_button.addEventListener('click', reset);
-getFile1_button.addEventListener('click', chooseIndex0);
-getFile2_button.addEventListener('click', chooseIndex1);
-getFile3_button.addEventListener('click', chooseIndex2);
-getFile_button.addEventListener('click', buildTreeFromFile);
-optimize_button.addEventListener('click', optimize);
+import {startTreeBuilding,clearVisualizations,makeDecision, TreeNode, root} from "./decision_tree.js";
+import{getData} from "./data.js";
+import{receiveData} from "./receiveData.js";
 
+const buttonHandlers = {
+    start_button: start,
+    reset_button: reset,
+    getData1: chooseSample0,
+    getData2: chooseSample1,
+    getData: buildTreeFromFile
+};
+
+Object.keys(buttonHandlers).forEach(buttonId => {
+    document.getElementById(buttonId).addEventListener('click', buttonHandlers[buttonId]);
+});
 
 const FILE = document.getElementById('file_input');
 let flag = true;
-let root;
 
-document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
+
+document.getElementById('input_data').value = "Выше,     Нет,    На месте";
 let index = 0;
 
-function chooseIndex0() {
-        document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
+function chooseSample0() {
+    document.getElementById('input_data').value = "Выше,     Нет,    На месте";
         index = 0;
         createTree();
 }
 
-function chooseIndex1() {
-    document.getElementById('input_data').value = "Выше,     Нет,    На месте";
+function chooseSample1() {
+    document.getElementById('input_data').value = "Hair, Legs, Toothed, Breathes";
     index = 1;
-    createTree();
-}
-
-function chooseIndex2() {
-    document.getElementById('input_data').value = "Солнечно, Жарко, Высокая";
-    index = 2;
     createTree();
 }
 
@@ -97,8 +98,8 @@ function drawTree(currentNode, treeElement) {
     if (nodeName === "root") {
         a.textContent = nodeName;
     } else {
-        let feature = currentNode.parent.decisionMaker;
-        a.textContent = feature + " : " + nodeName;
+        let category = currentNode.parent.decisionMaker;
+        a.textContent = category + " : " + nodeName;
     }
 
     li.appendChild(a);
@@ -122,9 +123,6 @@ function drawTree(currentNode, treeElement) {
     }
 }
 
-function optimize() {
-
-}
 
 function scrollEvent(event) {
     // блок стандартного скролла
@@ -150,29 +148,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     treeDiv.appendChild(root);
 });
-
-document.getElementById('clearPath_button').addEventListener('click', clearPath);
-
-function clearPath() {
-    clearSolution();
-}
-
-function clearVisualizations(node) {
-
-    if (node !== root) {
-        if (node.a) {
-            node.a.style.backgroundColor = '';
-        }
-        if (node.finalA) {
-            node.finalA.style.backgroundColor = '';
-        }
-    }
-
-    for (let i = 0; i < node.children.length; i++) {
-        clearVisualizations(node.children[i]);
-    }
-}
-
 
 function rerenderTree() {
     let divTree = document.getElementById("tree");

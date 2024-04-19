@@ -25,7 +25,7 @@ export function kMeansClustering(points, k, distanceFunction) {
     return clusters;
 }
 
-export function getRandomCentroids(points, k) {
+ function getRandomCentroids(points, k) {
     const centroids = [];
     const indices = new Set();
 
