@@ -5,7 +5,7 @@ export class TreeNode{
         this.value;
         this.valuePercentage = undefined;
         this.children = [];
-        this.decisionMaker;
+        this.decider;
         this.data=data;
         this.name = name;
         this.a;

@@ -107,8 +107,8 @@ function drawTree(currentNode, treeElement) {
     if (nodeName === "root") {
         a.textContent = nodeName;
     } else {
-        let feature = currentNode.parent.decisionMaker;
-        a.textContent = feature + " : " + nodeName;
+        let category = currentNode.parent.decisionMaker;
+        a.textContent = category + " : " + nodeName;
     }
 
     li.appendChild(a);
