@@ -98,19 +98,21 @@ function pathCalculation(path, points) {
     }
     return length;
 }
-export function antFunction(points) {
+export async function antFunction(points, callback ) {
     const countAnts = inputCountAnts.value;
-    let k = 0;
     let shortPath = 100000000000;
     let answerPath = [];
     let pathMatrix = creationPathMatrix(points);
     for(let i = 0; i < countAnts; i++) {
+        console.log(i)
         let pathAnts = antsRun(points, pathMatrix);
         pathAnts = pathSort([...pathAnts]);
         if(pathAnts[0].visitedLength < shortPath || pathAnts[0].visitedLength === shortPath) {
             shortPath = pathAnts[0].visitedLength;
             answerPath = pathAnts[0].visited;
         }
+        if(i === countAnts - 1) callback(answerPath)
+        else callback(pathAnts[pathAnts.length - 1].visited);
     }
     return answerPath;
 }

@@ -1,5 +1,5 @@
-const inputPopulation = document.querySelector('#countPopulation');
-const inputPercentageMutation = document.querySelector('#mutationPercentage');
+let inputPopulation = document.getElementById('#countPopulation');
+let inputPercentageMutation = document.querySelector('#mutationPercentage');
 
 
 export function pathGeneration(points) {
@@ -22,7 +22,9 @@ export function pathCalculation(path) {
 }
 
 export function populationGeneration(points) {
-    const populationSize = inputPopulation.value;
+    let x = document.getElementById('countPopulation').value;
+    const populationSize = parseInt(x);
+    console.log(populationSize)
     let population = [];
     for(let i = 0; i < populationSize; i++) {
         let path = pathGeneration(points);
@@ -33,8 +35,9 @@ export function populationGeneration(points) {
 }
 
 export function mutation(child){
+    let x = document.getElementById('mutationPercentage').value;
+    const percentageMutation = parseInt(x);
     let newChild = [...child];
-    const percentageMutation = inputPercentageMutation.value;
     let mutationChild = Math.floor(Math.random() * 100);
     if(mutationChild < percentageMutation) {
         let i = Math.floor(Math.random() * newChild.length);
@@ -48,7 +51,8 @@ export function mutation(child){
 }
 
 export function childrenGeneration2(population) {
-    const populationSize = inputPopulation.value;
+    let x = document.getElementById('countPopulation').value;
+    const populationSize = parseInt(x);
     for(let i = 0; i < populationSize - 1; i++) {
         let firstParent = [...(population[i]).path];
         let secondParent = [...(population[i + 1]).path];
@@ -88,9 +92,10 @@ export function populationSort(population) {
 }
 
 export async function geneticFunction(points, callback) {
-    const populationSize = inputPopulation.value;
+    let x = document.getElementById('countPopulation').value;
+    const populationSize = parseInt(x);
     let population = populationGeneration(points);
-    for(let i = 0; i < 2000; i++) {
+    for(let i = 0; i < 1000; i++) {
         population = [...childrenGeneration2([...population])];
         population = populationSort([...population]);
         while(population.length > populationSize) {

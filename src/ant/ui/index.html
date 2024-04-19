@@ -7,15 +7,46 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div style="padding: 32px">
+<div class="hamburger-menu">
+    <input id="menu__toggle" type="checkbox" />
+    <label class="menu__btn" for="menu__toggle">
+        <span></span>
+    </label>
+
+    <ul class="menu__box">
+        <li><a class="menu__item" href="../../../index.html">MAIN PAGE</a></li>
+        <li><a class="menu__item" href="../../solution_tree/ui/decision_tree.html">DECISION TREE</a></li>
+        <li><a class="menu__item" href="../../astar/ui/index.html">A* ALGORITHM</a></li>
+        <li><a class="menu__item" href="../../cluster/ui/cluster.html">CLUSTER ALGORITHM</a></li>
+        <li><a class="menu__item" href="../../neural/ui/index.html">NEURAL NETWORK</a></li>
+    </ul>
+</div>
+
+    <div style="padding: 18px">
         <h1 class="title"> Ant algorithm</h1>
-        <div style="display: flex; gap: 300px; height: 100%">
+        <div style="display: flex; height: 100%">
             <div id="canvasCover">
-                <canvas id="myCanvas" width="1300" height="650"></canvas>
-                <button id="start">start</button>
-                <label>
-                    <input id="countAnts" type="text" placeholder="Enter the number of ants runs" style="height: 50px">
-                </label>
+                <canvas id="myCanvas" width="1200" height="600"></canvas>
+                <div class="engines">
+                    <div class="btsStart">
+                        <button class="btsS" id="start"><span>START</span></button>
+                    </div>
+                    <div class="btsClear">
+                        <button class="btsC" id="clearAll"><span>CLEAR ALL</span></button>
+                    </div>
+                    <div class="slider">
+                        <label>Enter the number of ants runs</label>
+                        <input id="countAnts" type="range" class="countSlider" min="10" max="4000" step="1" value="10" oninput="firstOutPut.value = this.value"/>
+                        <output id="firstOutPut">10</output>
+
+                        <label>Enter animation speed</label>
+                        <input id="speed" type="range" class="speedSlider" min="10" max="300" step="1" value="10" oninput="secondOutPut.value = this.value"/>
+                        <output id="secondOutPut">10</output>
+                    </div>
+                    <h2> For the algorithm to work correctly, we recommend setting the
+                        number of runs proportional to the number of vertices (the more vertices, the greater the number of runs)
+                    </h2>
+                </div>
             </div>
         </div>
     </div>
