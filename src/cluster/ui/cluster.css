@@ -2,13 +2,11 @@
     font-family: jomhuria-web;
     src: url("Jomhuria-Regular.woff2");
 }
-
-header {
-    margin-right: 124vh;
-    margin-top: 2vh;
-    position: absolute;
+h1{
+    font-family: jomhuria-web;
+    color:#441f0b;
+    font-size:45px;
 }
-
 body {
     font-family: jomhuria-web;
     overflow-x: hidden;
