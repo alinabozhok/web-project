@@ -104,6 +104,7 @@ document.getElementById("clearAll").addEventListener("click", () => {
     points = [];
     currentPathStack = [];
     while(containerLengths.lastChild) containerLengths.removeChild(containerLengths.lastChild);
+    isPending = false;
 });
 
 render()
